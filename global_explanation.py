@@ -87,7 +87,7 @@ def main():
             cKNN = NearestNeighbors(n_neighbors=K).fit(contributions_)
 
             # Selecting instance to explain
-            index = 132
+            index = 0
             instance2explain = X_anomaly[index]
             prediction_, bias_, contribution_ = ti.predict(surrogate, instance2explain.reshape(1, -1))
             _, nbrs_cKNN = cKNN.kneighbors(contribution_[:, :, np.argmax(prediction_)].reshape(1, -1))
