@@ -30,10 +30,10 @@ def main():
 
     # Defining the list of black-boxes
     blackbox_list = {
-        'nn': MLPClassifier,
         'lr': LogisticRegression,
         'gt': GradientBoostingClassifier,
         'rf': RandomForestClassifier,
+        'nn': MLPClassifier
     }
 
     K_list = {
