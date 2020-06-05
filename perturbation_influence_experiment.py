@@ -105,8 +105,8 @@ def main():
 
             # Creating KNN models for feature values and contribution values
             K = K_list[dataset_kw]
-            fKNN = NearestNeighbors(n_neighbors=K).fit(X_train)
             cKNN = NearestNeighbors(n_neighbors=K).fit(contributions_)
+            fKNN = NearestNeighbors(n_neighbors=K).fit(X_train)
             pKNN = NearestNeighbors(n_neighbors=K).fit(pp_train)
 
             iter = 100
