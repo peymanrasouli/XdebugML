@@ -45,11 +45,11 @@ sudo yum install tbb
 # Reproducing the results
 1- To reproduce the perturbation influence results run:
 ```
-python perturbation_influence_experiment.py
+python perturbation_influence_experiments.py
 ```
 2- To reproduce the occurrence distribution results run:
 ```
-python occurence_distribution_experiment.py
+python occurence_distribution_experiments.py
 ```
 3- To explain an anomaly instance locally using EXPLAN method run:
 ```
