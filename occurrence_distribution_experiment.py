@@ -39,7 +39,7 @@ def main():
         'adult': 800
     }
 
-    print('Influence distribution experiment is running...')
+    print('Occurrence distribution experiment is running...')
 
     for dataset_kw in datsets_list:
         print('dataset=',dataset_kw)
