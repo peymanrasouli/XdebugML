@@ -43,20 +43,21 @@ sudo yum install tbb
 
 
 # Reproducing the results
-1- To explain an anomaly instance locally using EXPLAN method run:
+1- To reproduce the perturbation influence results run:
 ```
-python local_explanation.py
+python perturbation_influence_experiment.py
 ```
-2- To explain an anomaly instance globally using ALE plots run:
+2- To reproduce the occurrence distribution results run:
 ```
-python global_explanation.py
+python occurence_distribution_experiment.py
 ```
-
-3- To reproduce the perturbation influence results run:
+3- To explain an anomaly instance locally using EXPLAN method run:
 ```
-python perturbation_influence_experiments.py
+python local_explanation_experiment.py
 ```
-
-
+4- To explain an anomaly instance globally using ALE plots run:
+```
+python global_explanation_experiment.py
+```
 
 
