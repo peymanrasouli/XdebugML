@@ -2,7 +2,7 @@
 
 This repository contains implementation codes of the following paper:
 
-Explainable Debugging of Black-box Machine Learning Models
+Explainable Debugger for Black-box Machine Learning Models
 
 # Setup
 1- Clone the repository using HTTP/SSH:
