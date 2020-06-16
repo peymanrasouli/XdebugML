@@ -1,7 +1,7 @@
 import numpy as np
 def Crossover(x1,x2):
 
-    point = int(len(x1)/2)
+    point = np.random.randint(0, len(x1))
 
     offspring1 = np.zeros(len(x1))
     offspring2 = np.zeros(len(x2))
