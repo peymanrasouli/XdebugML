@@ -86,14 +86,14 @@ def main():
                 contributions_[i,:] = contributions[i,:,np.argmax(prediction[i])]
 
             # Find anomaly instances in test set
-            anomaly_indices = np.where(pred_test != y_test)[0]
-            X_anomaly = X_test[anomaly_indices]
+            anomaly_indices = np.where(pred_train != y_train)[0]
+            X_anomaly = X_train[anomaly_indices]
 
             # Creating KNN models for feature values and contribution values
             K = K_list[dataset_kw]
             cKNN = NearestNeighbors(n_neighbors=K).fit(contributions_)
 
-            # Selecting instance to explain
+            # Selecting instances to explain
             index = 0
             instance2explain = X_anomaly[index]
             prediction_x, bias_x, contribution_x = ti.predict(surrogate, instance2explain.reshape(1, -1))
@@ -118,15 +118,15 @@ def main():
             # Reporting the results
             print('\n')
             print('instance2explain =', str(dfX2E[index]))
-            print('ground-truth =', str(y_test[anomaly_indices[index]]))
-            print('blackbox-pred =', str(pred_test[anomaly_indices[index]]))
+            print('ground-truth =', str(y_train[anomaly_indices[index]]))
+            print('blackbox-pred =', str(pred_train[anomaly_indices[index]]))
             print('explanation = %s' % exp_EXPLAN[1])
             print('\n')
 
             # Writing the information to csv file
             results = '%s,%s\n%s,%s\n%s,%s\n%s,%s\n\n' % ('instance2explain =',str(dfX2E[index]),
-                                                          'ground-truth =',str(y_test[anomaly_indices[index]]),
-                                                          'blackbox-pred =',str(pred_test[anomaly_indices[index]]),
+                                                          'ground-truth =',str(y_train[anomaly_indices[index]]),
+                                                          'blackbox-pred =',str(pred_train[anomaly_indices[index]]),
                                                           'explanation =',str(exp_EXPLAN[1]))
             experiment_results.write(results)
 

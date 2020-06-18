@@ -79,8 +79,8 @@ def main():
                 contributions_[i,:] = contributions[i,:,np.argmax(prediction[i])]
 
             # Find anomaly instances in test set
-            anomaly_indices = np.where(pred_test != y_test)[0]
-            X_anomaly = X_test[anomaly_indices]
+            anomaly_indices = np.where(pred_train != y_train)[0]
+            X_anomaly = X_train[anomaly_indices]
 
             # Creating KNN models for feature values and contribution values
             K = K_list[dataset_kw]
