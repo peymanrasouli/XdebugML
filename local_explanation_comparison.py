@@ -32,8 +32,8 @@ def main():
     blackbox_list = {
         'lr': LogisticRegression,
         'gt': GradientBoostingClassifier,
-        'rf': RandomForestClassifier,
-        'nn': MLPClassifier,
+        # 'rf': RandomForestClassifier,
+        # 'nn': MLPClassifier,
 
     }
 
@@ -122,7 +122,7 @@ def main():
             cKNN = NearestNeighbors(n_neighbors=K).fit(contributions_)
 
             # Selecting instances to explain
-            N = 50
+            N = 100
             indices = np.random.choice(range(len(X_anomaly)), size=N, replace=False)
 
             # Main Loop
