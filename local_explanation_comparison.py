@@ -32,8 +32,8 @@ def main():
     blackbox_list = {
         'lr': LogisticRegression,
         'gt': GradientBoostingClassifier,
-        # 'rf': RandomForestClassifier,
-        # 'nn': MLPClassifier,
+        'rf': RandomForestClassifier,
+        'nn': MLPClassifier,
 
     }
 
