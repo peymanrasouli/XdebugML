@@ -118,7 +118,7 @@ def main():
 
             # Selecting instances to explain
             N = 100
-            indices = np.random.choice(range(len(X_anomaly)), size=N, replace=False)
+            indices = np.random.choice(range(len(X_anomaly)), size=np.min([len(X_anomaly),N]), replace=False)
 
             # Main Loop
             B = 10
