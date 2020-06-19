@@ -148,7 +148,7 @@ def main():
 
                 # Explaining representative set by GA using EXPLAN
                 tau = 500
-                N_samples = 3000
+                N_samples = 5000
                 for b in range(B):
                     exp_rp, info_rp = explan.Explainer(rp_set_ga[b],
                                                        blackbox,
