@@ -17,7 +17,7 @@ def RepresentativePick(B, contributions_x, nbrs_cKNN):
     Wb[np.where(W>0)] = 1
 
     # Representative pick using genetic algorithm
-    ga_ind = ga.ga(W, Wb, B, nPop=200, MaxIt=50)
+    ga_ind = ga.ga(W, Wb, B, nPop=300, MaxIt=50)
     rp_ind = nbrs_cKNN[ga_ind]
 
     return rp_ind

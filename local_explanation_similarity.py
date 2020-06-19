@@ -152,8 +152,8 @@ def main():
                 rp_set_rnd = X_train[rp_ind_rnd]
 
                 # Explaining representative set by GA using EXPLAN
-                tau = 250
-                N_samples = 500
+                tau = 500
+                N_samples = 5000
                 feature_names_ga = list()
                 feature_values_ga = list()
                 n_features_ga = list()
@@ -172,8 +172,8 @@ def main():
                     similar_bb_prediction_ga.append(int(pred_train[anomaly_indices[index]] == pred_train[rp_ind_ga[b]]))
 
                 # Explaining representative set by Random using EXPLAN
-                tau = 250
-                N_samples = 500
+                tau = 500
+                N_samples = 5000
                 feature_names_rnd = list()
                 feature_values_rnd = list()
                 n_features_rnd = list()
