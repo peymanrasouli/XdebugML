@@ -23,14 +23,14 @@ def main():
 
     # Defining the list of data sets
     datsets_list = {
-        # 'german': ('german_credit.csv', prepare_german_dataset),
-        # 'compas': ('compas-scores-two-years.csv', prepare_compass_dataset),
+        'german': ('german_credit.csv', prepare_german_dataset),
+        'compas': ('compas-scores-two-years.csv', prepare_compass_dataset),
         'adult': ('adult.csv', prepare_adult_dataset)
     }
 
     # Defining the list of black-boxes
     blackbox_list = {
-        # 'lr': LogisticRegression,
+        'lr': LogisticRegression,
         'gt': GradientBoostingClassifier,
         'rf': RandomForestClassifier,
         'nn': MLPClassifier
