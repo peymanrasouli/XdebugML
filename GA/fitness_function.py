@@ -15,7 +15,7 @@ def FitnessFunction(s, W, Wb, B):
 
     fitness = np.dot(values,weights)
 
-    if sum(s) > B:
+    if sum(s) != B:
         fitness = 0
 
     out = {
