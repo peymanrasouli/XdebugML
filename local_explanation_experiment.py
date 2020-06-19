@@ -102,8 +102,8 @@ def main():
             rp_set = X_train[rp_ind]
 
             # Explaining isntance2explain using EXPLAN
-            tau = 500
-            N_samples = 5000
+            tau = 250
+            N_samples = 3000
             exp_EXPLAN, info_EXPLAN = explan.Explainer(instance2explain,
                                                        blackbox,
                                                        dataset,
@@ -127,8 +127,8 @@ def main():
 
 
             # Explaining representative set using EXPLAN
-            tau = 500
-            N_samples = 5000
+            tau = 250
+            N_samples = 3000
             for b in range(B):
                 exp_EXPLAN, info_EXPLAN = explan.Explainer(rp_set[b],
                                                            blackbox,

@@ -147,8 +147,8 @@ def main():
                 rp_set_rnd = X_train[rp_ind_rnd]
 
                 # Explaining representative set by GA using EXPLAN
-                tau = 500
-                N_samples = 5000
+                tau = 250
+                N_samples = 3000
                 for b in range(B):
                     exp_rp, info_rp = explan.Explainer(rp_set_ga[b],
                                                        blackbox,
@@ -169,8 +169,8 @@ def main():
 
 
                 # Explaining representative set by Random using EXPLAN
-                tau = 500
-                N_samples = 5000
+                tau = 250
+                N_samples = 3000
                 for b in range(B):
                     exp_rp, info_rp = explan.Explainer(rp_set_rnd[b],
                                                        blackbox,
