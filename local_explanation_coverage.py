@@ -191,8 +191,8 @@ def main():
 
                 global_coverage_ga =  len(np.unique(np.concatenate(global_coverage_ga))) / K
                 global_coverage_rnd = len(np.unique(np.concatenate(global_coverage_rnd))) / K
-                local_coverage_ga =  np.mean(global_coverage_ga)
-                local_coverage_rnd = np.mean(global_coverage_rnd)
+                local_coverage_ga =  np.mean(local_coverage_ga)
+                local_coverage_rnd = np.mean(local_coverage_rnd)
                 precision_ga = np.mean(precision_ga)
                 precision_rnd = np.mean(precision_rnd)
 
