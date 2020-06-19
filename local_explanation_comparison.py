@@ -30,17 +30,17 @@ def main():
 
     # Defining the list of black-boxes
     blackbox_list = {
-        'lr': LogisticRegression,
+        # 'lr': LogisticRegression,
         'gt': GradientBoostingClassifier,
-        'rf': RandomForestClassifier,
-        'nn': MLPClassifier,
+        # 'rf': RandomForestClassifier,
+        # 'nn': MLPClassifier,
 
     }
 
     K_list = {
         'german': 200,
         'compas': 500,
-        'adult': 800
+        'adult': 2000
     }
 
     print('Local explanation experiment is running...')
@@ -52,11 +52,6 @@ def main():
         dataset = prepare_dataset_fn(dataset_name, path_data)
         # Splitting the data set to train, test, and explain set
         X, y = dataset['X'], dataset['y']
-
-        if dataset_kw == 'adult':
-            indices = np.random.choice(range(len(X)),size=10000,replace=False)
-            X = X[indices]
-            y = y[indices]
 
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
