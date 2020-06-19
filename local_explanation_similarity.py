@@ -67,12 +67,12 @@ def main():
             print('\n')
 
             # Creating/opening a csv file for storing results
-            exists = os.path.isfile(path_exp + 'local_explanation_comparison_results_%s_%s_%s.csv' %
+            exists = os.path.isfile(path_exp + 'local_explanation_similarity_results_%s_%s_%s.csv' %
                                       (dataset_kw, blackbox_name,'K_'+str(K_list[dataset_kw])))
             if exists:
-                os.remove(path_exp + 'local_explanation_comparison_results_%s_%s_%s.csv' %
+                os.remove(path_exp + 'local_explanation_similarity_results_%s_%s_%s.csv' %
                                       (dataset_kw, blackbox_name,'K_'+str(K_list[dataset_kw])))
-            experiment_results = open(path_exp + 'local_explanation_comparison_results_%s_%s_%s.csv' %
+            experiment_results = open(path_exp + 'local_explanation_similarity_results_%s_%s_%s.csv' %
                                       (dataset_kw, blackbox_name,'K_'+str(K_list[dataset_kw])), 'a')
 
 
