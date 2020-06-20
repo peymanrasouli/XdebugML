@@ -8,11 +8,13 @@ from matplotlib import pyplot as plt
 def ga(W, Wb, B, nPop=100, MaxIt=100):
 
     ## Problem definition
-    VarSize = len(W)   # Decision Variables Matrix Size
+    VarMin = 0  # Lower Bound of Decision Variables
+    VarMax = len(W) - 1  # Higher Bound of Decision Variables
+    VarSize = B  # Decision Variables Size
 
     ## GA parameters
     pc = 0.8    # Crossover Percentage
-    pm = 0.3    # Mutation Percentage
+    pm = 0.4    # Mutation Percentage
     nc = 2 * round(pc * nPop / 2) # Number of Offsprings
     nm = round(pm * nPop) # Number of Mutants
 
@@ -27,8 +29,7 @@ def ga(W, Wb, B, nPop=100, MaxIt=100):
 
     for i in range(nPop):
         # Initialize positions
-        pop[i]['position'] = np.zeros(VarSize).astype(int)
-        pop[i]['position'][np.random.randint(VarSize, size=B)] = 1
+        pop[i]['position'] = np.random.randint(VarMin,VarMax,VarSize)
         # Evaluation
         pop[i]['fitness'], pop[i]['out'] = FitnessFunction(pop[i]['position'], W, Wb, B)
 
@@ -76,7 +77,7 @@ def ga(W, Wb, B, nPop=100, MaxIt=100):
             p = pop[i]
 
             # Apply mutation
-            popm[k]['position']= Mutate(p['position'])
+            popm[k]['position']= Mutate(p['position'],VarMin,VarMax)
 
             # Evaluate mutant
             popm[k]['fitness'], popm[k]['out'] = FitnessFunction(popm[k]['position'], W, Wb, B)
@@ -104,7 +105,4 @@ def ga(W, Wb, B, nPop=100, MaxIt=100):
         # Show iteration information
         # print('Iteration=',it,'--','Best fitness=',bestFitness[it])
 
-    return np.where(bestSol['position']==1)
-
-
-
+    return bestSol['position']

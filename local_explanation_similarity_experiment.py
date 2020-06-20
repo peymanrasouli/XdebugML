@@ -24,8 +24,8 @@ def main():
     # Defining the list of data sets
     datsets_list = {
         'german': ('german_credit.csv', prepare_german_dataset),
-        # 'compas': ('compas-scores-two-years.csv', prepare_compass_dataset),
-        # 'adult': ('adult.csv', prepare_adult_dataset)
+        'compas': ('compas-scores-two-years.csv', prepare_compass_dataset),
+        'adult': ('adult.csv', prepare_adult_dataset)
     }
 
     # Defining the list of black-boxes
@@ -43,7 +43,7 @@ def main():
         'adult': 2000
     }
 
-    print('Local explanation experiment is running...')
+    print('Local explanation similarity experiment is running...')
 
     for dataset_kw in datsets_list:
         print('dataset=',dataset_kw)

@@ -1,11 +1,13 @@
 import numpy as np
 
-def Mutate(x):
+def Mutate(x, VarMin, VarMax):
 
     y = x.copy()
 
     ind = np.random.randint(0,len(x))
 
-    y[ind] = 1 - y[ind]
+    mu_value = np.random.randint(VarMin, VarMax, 1)
+
+    y[ind] = mu_value
 
     return y

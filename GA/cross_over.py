@@ -12,4 +12,4 @@ def Crossover(x1,x2):
     offspring2[:point] = x2[:point]
     offspring2[point:] = x1[point:]
 
-    return offspring1, offspring2
+    return offspring1.astype(int), offspring2.astype(int)

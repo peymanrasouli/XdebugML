@@ -108,7 +108,7 @@ def main():
             n_test = 10
             for it in range(iter):
                 print('Iteration=',it)
-                perturb_percent = 0.75
+                perturb_percent = 0.5
                 influence =  PerturbationInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstructor,
                                                    X_train, y_train, X_anomaly, n_test=n_test, perturb_percent=perturb_percent)
 

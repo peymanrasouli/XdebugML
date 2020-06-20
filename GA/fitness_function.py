@@ -5,8 +5,8 @@ def FitnessFunction(s, W, Wb, B):
     W_ = W.copy()
     Wb_ = Wb.copy()
 
-    W_ = W_[np.where(s == 1)]
-    Wb_ = Wb_[np.where(s == 1)]
+    W_ = W_[s]
+    Wb_ = Wb_[s]
 
     values = np.sum(W_,axis=0)
 
@@ -15,7 +15,7 @@ def FitnessFunction(s, W, Wb, B):
 
     fitness = np.dot(values,weights)
 
-    if sum(s) != B:
+    if len(np.unique(s)) != B:
         fitness = 0
 
     out = {
@@ -23,5 +23,4 @@ def FitnessFunction(s, W, Wb, B):
         'values': values
     }
     return fitness, out
-
 
