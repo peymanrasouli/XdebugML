@@ -86,21 +86,24 @@ def main():
             fDistribution = np.zeros(len(X_train))
             pDistribution = np.zeros(len(X_train))
 
-            for i,x in zip(range(len(X_anomaly)),X_anomaly):
-                print('anomaly sample=', i)
+            # cKNN
+            prediction_a, bias_a, contributions_a = ti.predict(surrogate, X_anomaly)
+            contributions_a_ = np.zeros(np.shape(X_anomaly))
+            for i in range(len(contributions_a)):
+                contributions_a_[i, :] = contributions_a[i, :, np.argmax(prediction_a[i])]
+            _, nbrs_cKNN = cKNN.kneighbors(contributions_a_)
+            for n in (nbrs_cKNN):
+                cDistribution[n] = cDistribution[n] + 1
 
-                prediction_x, bias_x, contribution_x = ti.predict(surrogate, x.reshape(1, -1))
-                _, nbrs_cKNN = cKNN.kneighbors(contribution_x[:, :, np.argmax(prediction_x)].reshape(1, -1))
-                nbrs_cKNN = nbrs_cKNN[0]
-                cDistribution[nbrs_cKNN] = cDistribution[nbrs_cKNN] + 1
+            # fKNN
+            _, nbrs_fKNN = fKNN.kneighbors(X_anomaly)
+            for n in (nbrs_fKNN):
+                fDistribution[n] = fDistribution[n] + 1
 
-                _, nbrs_fKNN = fKNN.kneighbors(x.reshape(1, -1))
-                nbrs_fKNN = nbrs_fKNN[0]
-                fDistribution[nbrs_fKNN] = fDistribution[nbrs_fKNN] + 1
-
-                _, nbrs_pKNN = pKNN.kneighbors(blackbox.predict_proba(x.reshape(1, -1)))
-                nbrs_pKNN = nbrs_pKNN[0]
-                pDistribution[nbrs_pKNN] = pDistribution[nbrs_pKNN] + 1
+            # pKNN
+            _, nbrs_pKNN = pKNN.kneighbors(blackbox.predict_proba(X_anomaly))
+            for n in (nbrs_pKNN):
+                pDistribution[n] = pDistribution[n] + 1
 
             # cDistribution bar plot
             cSorted = np.argsort(cDistribution)
