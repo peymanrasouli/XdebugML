@@ -45,9 +45,9 @@ def main():
         # Reading a data set
         dataset_name, prepare_dataset_fn = datsets_list[dataset_kw]
         dataset = prepare_dataset_fn(dataset_name, path_data)
-        # Splitting the data set to train, test, and explain set
+        
+        # Splitting the data set to train and test sets
         X, y = dataset['X'], dataset['y']
-
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         for blackbox_name in blackbox_list:
