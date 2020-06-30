@@ -142,7 +142,10 @@ def main():
 
                 # Picking representative samples using GA
                 contributions_x = contributions_[nbrs_cKNN]
-                rp_ind_ga = RepresentativePick(B, contributions_x, nbrs_cKNN)
+                try:
+                    rp_ind_ga = RepresentativePick(B, contributions_x, nbrs_cKNN)
+                except Exception:
+                    rp_ind_ga = np.random.choice(range(len(nbrs_cKNN)), size=B, replace=False)
                 rp_set_ga = X_train[rp_ind_ga]
 
                 # Picking representative samples randomly
