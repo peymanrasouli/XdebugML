@@ -51,11 +51,15 @@ python perturbation_influence_experiment.py
 ```
 python occurrence_distribution_experiment.py
 ```
-3- To explain an anomaly instance locally using EXPLAN method run:
+3- To reproduce the local explanation similarity results run:
+```
+python local_explanation_similarity_experiment.py
+```
+4- To explain an anomaly instance locally using EXPLAN method run:
 ```
 python local_explanation_experiment.py
 ```
-4- To explain an anomaly instance globally using ALE plots run:
+5- To explain an anomaly instance globally using ALE plots run:
 ```
 python global_explanation_experiment.py
 ```
