@@ -87,7 +87,6 @@ def main():
             _, nbrs_cKNN = cKNN.kneighbors(contribution_[:, :, np.argmax(prediction_)].reshape(1, -1))
             nbrs_cKNN = nbrs_cKNN[0]
 
-
             # Accumulated Local Effects (ALE) plots of neighborhood
             X_nbrs = X_train[nbrs_cKNN]
 
@@ -102,7 +101,6 @@ def main():
                 fig = plt.gcf()
                 fig.savefig(path_exp+str(index)+'_'+features[f]+'_'+dataset_kw+'_'+blackbox_name+'.pdf')
                 plt.close(fig)
-
 
 if __name__ == "__main__":
     main()

@@ -12,7 +12,6 @@ import warnings
 warnings.filterwarnings("ignore")
 
 def main():
-
     # Defining path of data sets and experiment results
     path = './'
     path_data = path + 'EXPLAN/datasets/'
@@ -41,17 +40,17 @@ def main():
     print('Occurrence distribution experiment is running...')
 
     for dataset_kw in datsets_list:
-        print('dataset=',dataset_kw)
+        print('dataset=', dataset_kw)
         # Reading a data set
         dataset_name, prepare_dataset_fn = datsets_list[dataset_kw]
         dataset = prepare_dataset_fn(dataset_name, path_data)
-        
+
         # Splitting the data set into train and test sets
         X, y = dataset['X'], dataset['y']
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         for blackbox_name in blackbox_list:
-            print('blackbox=',blackbox_name)
+            print('blackbox=', blackbox_name)
 
             # Creating and training black-box
             BlackBoxConstructor = blackbox_list[blackbox_name]
@@ -69,7 +68,7 @@ def main():
             prediction, bias, contributions = ti.predict(surrogate, X_train)
             contributions_ = np.zeros(np.shape(X_train))
             for i in range(len(contributions_)):
-                contributions_[i,:] = contributions[i,:,np.argmax(prediction[i])]
+                contributions_[i, :] = contributions[i, :, np.argmax(prediction[i])]
 
             # Find anomaly instances in test set
             anomaly_indices = np.where(pred_train != y_train)[0]
@@ -111,7 +110,7 @@ def main():
             plt.xlabel('Training Samples')
             plt.ylabel('Number of Occurrence')
             plt.title('Occurrence distribution of training samples in the neighborhoods')
-            plt.savefig(path_exp+'cKNN_'+dataset_kw+'_'+blackbox_name+'_'+'K_'+str(K)+'.pdf')
+            plt.savefig(path_exp + 'cKNN_' + dataset_kw + '_' + blackbox_name + '_' + 'K_' + str(K) + '.pdf')
             plt.show(block=False)
             plt.close()
 

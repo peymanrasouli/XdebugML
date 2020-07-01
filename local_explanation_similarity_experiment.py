@@ -74,27 +74,25 @@ def main():
             experiment_results = open(path_exp + 'local_explanation_similarity_results_%s_%s_%s.csv' %
                                       (dataset_kw, blackbox_name,'K_'+str(K_list[dataset_kw])), 'a')
 
-
-            results = '%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n' % \
-                      ('similar_ground_truth_ga', 'similar_ground_truth_rnd', 'similar_bb_prediction_ga',
-                       'similar_bb_prediction_rnd', 'jaccard_feature_names_ga', 'jaccard_feature_names_rnd',
-                       'similar_feature_values_ga', 'similar_feature_values_rnd', 'deviation_n_features_ga',
-                       'deviation_n_features_rnd')
+            results = '%s,%s,%s,%s,%s,%s,%s,%s\n' % \
+                      ('same_class_anomaly_ga', 'same_class_anomaly_rnd',
+                       'same_class_ok_ga', 'same_class_ok_rnd',
+                       'jaccard_feature_names_ga', 'jaccard_feature_names_rnd',
+                       'deviation_n_features_ga', 'deviation_n_features_rnd')
             experiment_results.write(results)
 
-
-            results = '%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n' % ('=average(A4:A1000)', '=average(B4:B1000)',
-                                                           '=average(C4:C1000)', '=average(D4:D1000)',
-                                                           '=average(E4:E1000)', '=average(F4:F1000)',
-                                                           '=average(G4:G1000)', '=average(H4:H1000)',
-                                                           '=average(I4:I1000)', '=average(J4:J1000)')
+            results = '%s,%s,%s,%s,%s,%s,%s,%s\n' % \
+                      ('=average(A4:A1000)', '=average(B4:B1000)',
+                       '=average(C4:C1000)', '=average(D4:D1000)',
+                       '=average(E4:E1000)', '=average(F4:F1000)',
+                       '=average(G4:G1000)', '=average(H4:H1000)')
             experiment_results.write(results)
 
-            results = '%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n' % ('=stdev(A4:A1000)', '=stdev(B4:B1000)',
-                                                           '=stdev(C4:C1000)', '=stdev(D4:D1000)',
-                                                           '=stdev(E4:E1000)', '=stdev(F4:F1000)',
-                                                           '=stdev(G4:G1000)', '=stdev(H4:H1000)',
-                                                           '=stdev(I4:I1000)', '=stdev(J4:J1000)')
+            results = '%s,%s,%s,%s,%s,%s,%s,%s\n' % \
+                      ('=stdev(A4:A1000)', '=stdev(B4:B1000)',
+                       '=stdev(C4:C1000)', '=stdev(D4:D1000)',
+                       '=stdev(E4:E1000)', '=stdev(F4:F1000)',
+                       '=stdev(G4:G1000)', '=stdev(H4:H1000)')
             experiment_results.write(results)
             experiment_results.flush()
 
@@ -124,16 +122,14 @@ def main():
             for i,index in zip(range(len(indices)),indices):
                 print('Anomaly instance=',i)
                 jaccard_feature_names_ga = list()
-                similar_feature_values_ga = list()
                 deviation_n_features_ga = list()
-                similar_ground_truth_ga = list()
-                similar_bb_prediction_ga = list()
+                same_class_anomaly_ga = list()
+                same_class_ok_ga = list()
 
                 jaccard_feature_names_rnd = list()
-                similar_feature_values_rnd = list()
                 deviation_n_features_rnd = list()
-                similar_ground_truth_rnd = list()
-                similar_bb_prediction_rnd = list()
+                same_class_anomaly_rnd = list()
+                same_class_ok_rnd = list()
 
                 instance2explain = X_anomaly[index]
                 prediction_x, bias_x, contribution_x = ti.predict(surrogate, instance2explain.reshape(1, -1))
@@ -170,8 +166,11 @@ def main():
                     feature_names_ga.append(list(rule_EXPLAN.keys()))
                     feature_values_ga.append(rule_EXPLAN)
                     n_features_ga.append(len(list(rule_EXPLAN.keys())))
-                    similar_ground_truth_ga.append(int(y_train[anomaly_indices[index]] == y_train[rp_ind_ga[b]]))
-                    similar_bb_prediction_ga.append(int(pred_train[anomaly_indices[index]] == pred_train[rp_ind_ga[b]]))
+                    sim1 = y_train[anomaly_indices[index]] == y_train[rp_ind_ga[b]]
+                    sim2 = pred_train[anomaly_indices[index]] == pred_train[rp_ind_ga[b]]
+                    sim3 = pred_train[anomaly_indices[index]] != pred_train[rp_ind_ga[b]]
+                    same_class_anomaly_ga.append(int(sim1 and sim2))
+                    same_class_ok_ga.append(int(sim1 and sim3))
 
                 # Explaining representative set by Random using EXPLAN
                 tau = 250
@@ -190,8 +189,11 @@ def main():
                     feature_names_rnd.append(list(rule_EXPLAN.keys()))
                     feature_values_rnd.append(rule_EXPLAN)
                     n_features_rnd.append(len(list(rule_EXPLAN.keys())))
-                    similar_ground_truth_rnd.append(int(y_train[anomaly_indices[index]] == y_train[rp_ind_rnd[b]]))
-                    similar_bb_prediction_rnd.append(int(pred_train[anomaly_indices[index]] == pred_train[rp_ind_rnd[b]]))
+                    sim1 = int(y_train[anomaly_indices[index]] == y_train[rp_ind_rnd[b]])
+                    sim2 = int(pred_train[anomaly_indices[index]] == pred_train[rp_ind_rnd[b]])
+                    sim3 = int(pred_train[anomaly_indices[index]] != pred_train[rp_ind_rnd[b]])
+                    same_class_anomaly_rnd.append(int(sim1 and sim2))
+                    same_class_ok_rnd.append(int(sim1 and sim3))
 
                 # Calculating explanation comparison metrics
                 for i in range(0, B):
@@ -203,11 +205,6 @@ def main():
                                       len(set(feature_names_ga[i]) | set(feature_names_ga[ii]))
                             jaccard_feature_names_ga.append(jaccard)
 
-                            # Calculating the similarity between feature values of predicates of the rules
-                            similarity = [1 if feature_values_ga[i][f] == feature_values_ga[ii][f] else 0
-                                          for f in set(feature_names_ga[i]) & set(feature_names_ga[ii])]
-                            [similar_feature_values_ga.append(s) for s in similarity]
-
                             # Calculating the deviation from the number of predicates in the collected rules
                             deviation = np.abs(n_features_ga[i] - n_features_ga[ii])
                             deviation_n_features_ga.append(deviation)
@@ -218,38 +215,29 @@ def main():
                                       len(set(feature_names_rnd[i]) | set(feature_names_rnd[ii]))
                             jaccard_feature_names_rnd.append(jaccard)
 
-                            # Calculating the similarity between feature values of predicates of the rules
-                            similarity = [1 if feature_values_rnd[i][f] == feature_values_rnd[ii][f] else 0
-                                          for f in set(feature_names_rnd[i]) & set(feature_names_rnd[ii])]
-                            [similar_feature_values_rnd.append(s) for s in similarity]
-
                             # Calculating the deviation from the number of predicates in the collected rules
                             deviation = np.abs(n_features_rnd[i] - n_features_rnd[ii])
                             deviation_n_features_rnd.append(deviation)
 
-                print('similar_ground_truth_ga  =', np.mean(similar_ground_truth_ga))
-                print('similar_ground_truth_rnd =', np.mean(similar_ground_truth_rnd))
-                print('similar_bb_prediction_ga  =', np.mean(similar_bb_prediction_ga))
-                print('similar_bb_prediction_rnd =', np.mean(similar_bb_prediction_rnd))
+                print('same_class_anomaly_ga  =', np.mean(same_class_anomaly_ga))
+                print('same_class_anomaly_rnd =', np.mean(same_class_anomaly_rnd))
+                print('same_class_ok_ga  =', np.mean(same_class_ok_ga))
+                print('same_class_ok_rnd =', np.mean(same_class_ok_rnd))
                 print('jaccard_feature_names_ga  =', np.mean(jaccard_feature_names_ga))
                 print('jaccard_feature_names_rnd =', np.mean(jaccard_feature_names_rnd))
-                print('similar_feature_values_ga  =', np.mean(similar_feature_values_ga))
-                print('similar_feature_values_rnd =', np.mean(similar_feature_values_rnd))
                 print('deviation_n_features_ga  =', np.mean(deviation_n_features_ga))
                 print('deviation_n_features_rnd =', np.mean(deviation_n_features_rnd))
                 print('-------------------------------------------------------------')
 
-                results = '%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f' % (
-                            np.mean(similar_ground_truth_ga),
-                            np.mean(similar_ground_truth_rnd),
-                            np.mean(similar_bb_prediction_ga),
-                            np.mean(similar_bb_prediction_rnd),
+                results = '%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f' % (
+                            np.mean(same_class_anomaly_ga),
+                            np.mean(same_class_anomaly_rnd),
+                            np.mean(same_class_ok_ga),
+                            np.mean(same_class_ok_rnd),
                             np.mean(jaccard_feature_names_ga),
                             np.mean(jaccard_feature_names_rnd),
-                            np.mean(similar_feature_values_ga),
-                            np.mean(similar_feature_values_rnd),
                             np.mean(deviation_n_features_ga),
-                            np.mean(deviation_n_features_rnd),
+                            np.mean(deviation_n_features_rnd)
                 )
 
                 # Writing the information to csv file
@@ -259,6 +247,6 @@ def main():
 
             experiment_results.close()
 
-
 if __name__ == "__main__":
     main()
+
