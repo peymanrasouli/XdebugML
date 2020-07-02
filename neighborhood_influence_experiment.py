@@ -1,4 +1,5 @@
 import os
+import numpy as np
 from EXPLAN.utils import *
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -62,11 +63,11 @@ def main():
             print('blackbox accuracy=', bb_accuracy)
 
             # Creating a csv file for storing results
-            exists = os.path.isfile(path_exp + 'perturbation_influence_results_%s_%s.csv' % (dataset_kw, blackbox_name))
+            exists = os.path.isfile(path_exp + 'neighborhood_influence_results_%s_%s.csv' % (dataset_kw, blackbox_name))
             if exists:
-                os.remove(path_exp + 'perturbation_influence_results_%s_%s.csv' % (dataset_kw, blackbox_name))
+                os.remove(path_exp + 'neighborhood_influence_results_%s_%s.csv' % (dataset_kw, blackbox_name))
             experiment_results = open(
-                path_exp + 'perturbation_influence_results_%s_%s.csv' % (dataset_kw, blackbox_name), 'a')
+                path_exp + 'neighborhood_influence_results_%s_%s.csv' % (dataset_kw, blackbox_name), 'a')
 
             results = '%s,%s,%s,%s,%s,%s,%s,%s,%s\n' % \
                       ('dataset', 'blackbox', 'bb_accuracy',
@@ -109,9 +110,9 @@ def main():
             for it in range(iter):
                 print('Iteration=', it)
                 perturb_percent = 0.5
-                influence = NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, 
-                				    BlackBoxConstructor, X_train, y_train,
-                				    X_anomaly, n_test=n_test,
+                influence = NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN,
+                                                  BlackBoxConstructor, X_train, y_train,
+                                                  X_anomaly, n_test=n_test,
                                                   perturb_percent=perturb_percent)
 
                 print('cKNN =', influence[0])

@@ -24,4 +24,3 @@ def FitnessFunction(R, W, Wb, B):
     }
 
     return fitness, out
-

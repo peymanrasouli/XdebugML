@@ -21,4 +21,3 @@ def RepresentativePick(B, contributions_x, nbrs_cKNN):
     rp_ind = nbrs_cKNN[ga_ind]
 
     return rp_ind
-    

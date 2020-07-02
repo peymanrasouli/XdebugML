@@ -22,4 +22,3 @@ os.system("find . -name '*.pyc' -exec rm -f {} \;")
 os.makedirs("experiments")
 
 print("Setup is complete!")
-

@@ -3,7 +3,6 @@ from GA.fitness_function import FitnessFunction
 from GA.weighted_random_choice import WeightedRandomChoice
 from GA.cross_over import Crossover
 from GA.mutate import Mutate
-from matplotlib import pyplot as plt
 
 def ga(W, Wb, B, nPop=100, MaxIt=100):
 
@@ -106,4 +105,3 @@ def ga(W, Wb, B, nPop=100, MaxIt=100):
         # print('Iteration=',it,'--','Best fitness=',bestFitness[it])
 
     return bestSol['position']
-    
