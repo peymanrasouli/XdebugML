@@ -109,8 +109,9 @@ def main():
             for it in range(iter):
                 print('Iteration=', it)
                 perturb_percent = 0.5
-                influence = NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstructor,
-                                                  X_train, y_train, X_anomaly, n_test=n_test,
+                influence = NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, 
+                				    BlackBoxConstructor, X_train, y_train,
+                				    X_anomaly, n_test=n_test,
                                                   perturb_percent=perturb_percent)
 
                 print('cKNN =', influence[0])

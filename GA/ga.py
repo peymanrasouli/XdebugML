@@ -106,3 +106,4 @@ def ga(W, Wb, B, nPop=100, MaxIt=100):
         # print('Iteration=',it,'--','Best fitness=',bestFitness[it])
 
     return bestSol['position']
+    

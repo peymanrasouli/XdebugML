@@ -22,5 +22,6 @@ def FitnessFunction(R, W, Wb, B):
         'weights': weights,
         'values': values
     }
+
     return fitness, out
 

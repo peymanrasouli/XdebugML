@@ -13,3 +13,4 @@ def Crossover(x1,x2):
     offspring2[point:] = x1[point:]
 
     return offspring1.astype(int), offspring2.astype(int)
+    
