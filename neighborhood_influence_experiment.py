@@ -8,7 +8,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import NearestNeighbors
 from treeinterpreter import treeinterpreter as ti
-from perturbation_influence import PerturbationInfluence
+from neighborhood_influence import NeighborhoodInfluence
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -38,7 +38,7 @@ def main():
         'adult': 2000
     }
 
-    print('Perturbation influence experiment is running...')
+    print('Neighborhood influence experiment is running...')
 
     for dataset_kw in datsets_list:
         print('dataset=', dataset_kw)
@@ -109,7 +109,7 @@ def main():
             for it in range(iter):
                 print('Iteration=', it)
                 perturb_percent = 0.5
-                influence = PerturbationInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstructor,
+                influence = NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstructor,
                                                   X_train, y_train, X_anomaly, n_test=n_test,
                                                   perturb_percent=perturb_percent)
 

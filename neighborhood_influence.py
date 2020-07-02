@@ -1,7 +1,7 @@
 import numpy as np
 from treeinterpreter import treeinterpreter as ti
 
-def PerturbationInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstructor,
+def NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstructor,
                           X_train, y_train, X_anomaly, n_test=10,perturb_percent=0.75):
 
     ind = np.random.choice(len(X_anomaly),size=n_test,replace=False)
