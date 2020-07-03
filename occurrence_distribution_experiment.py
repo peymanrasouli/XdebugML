@@ -41,6 +41,7 @@ def main():
 
     for dataset_kw in datsets_list:
         print('dataset=', dataset_kw)
+
         # Reading a data set
         dataset_name, prepare_dataset_fn = datsets_list[dataset_kw]
         dataset = prepare_dataset_fn(dataset_name, path_data)
@@ -60,7 +61,7 @@ def main():
             bb_accuracy = accuracy_score(y_test, pred_test)
             print('blackbox accuracy=', bb_accuracy)
 
-            # Random Forest surrogate model construction
+            # Constructing a Random Forest as surrogate model
             pred_train = blackbox.predict(X_train)
             surrogate = RandomForestClassifier(n_estimators=200)
             surrogate.fit(X_train, pred_train)
@@ -69,11 +70,11 @@ def main():
             for i in range(len(contributions_)):
                 contributions_[i, :] = contributions[i, :, np.argmax(prediction[i])]
 
-            # Find anomaly instances in test set
+            # Finding anomaly instances in the train set
             anomaly_indices = np.where(pred_train != y_train)[0]
             X_anomaly = X_train[anomaly_indices]
 
-            # Creating KNN models for feature values and contribution values
+            # Creating KNN models for contribution values and feature values
             K = K_list[dataset_kw]
             cKNN = NearestNeighbors(n_neighbors=K).fit(contributions_)
             fKNN = NearestNeighbors(n_neighbors=K).fit(X_train)
@@ -96,7 +97,7 @@ def main():
             for n in (nbrs_fKNN):
                 fDistribution[n] = fDistribution[n] + 1
 
-            # Plot the occurrence distribution of training samples in the neighborhoods
+            # Plot the occurrence distributions
             cSorted = np.argsort(cDistribution)
             fSorted = np.argsort(fDistribution)
             plt.bar(range(len(X_train)), cDistribution[cSorted], alpha = 0.5, color ='green')
