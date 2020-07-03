@@ -62,7 +62,6 @@ def main():
 
             # Random Forest surrogate model construction
             pred_train = blackbox.predict(X_train)
-            pp_train = blackbox.predict_proba(X_train)
             surrogate = RandomForestClassifier(n_estimators=200)
             surrogate.fit(X_train, pred_train)
             prediction, bias, contributions = ti.predict(surrogate, X_train)
@@ -78,12 +77,10 @@ def main():
             K = K_list[dataset_kw]
             cKNN = NearestNeighbors(n_neighbors=K).fit(contributions_)
             fKNN = NearestNeighbors(n_neighbors=K).fit(X_train)
-            pKNN = NearestNeighbors(n_neighbors=K).fit(pp_train)
 
             # Finding occurrence distribution of training samples in the neighborhood of anomalies
             cDistribution = np.zeros(len(X_train))
             fDistribution = np.zeros(len(X_train))
-            pDistribution = np.zeros(len(X_train))
 
             # cKNN
             prediction_a, bias_a, contributions_a = ti.predict(surrogate, X_anomaly)
@@ -99,38 +96,18 @@ def main():
             for n in (nbrs_fKNN):
                 fDistribution[n] = fDistribution[n] + 1
 
-            # pKNN
-            _, nbrs_pKNN = pKNN.kneighbors(blackbox.predict_proba(X_anomaly))
-            for n in (nbrs_pKNN):
-                pDistribution[n] = pDistribution[n] + 1
-
-            # cDistribution bar plot
+            # Plot the occurrence distribution of training samples in the neighborhoods
             cSorted = np.argsort(cDistribution)
-            plt.bar(range(len(X_train)), cDistribution[cSorted])
-            plt.xlabel('Training Samples')
-            plt.ylabel('Number of Occurrence')
-            plt.title('Occurrence distribution of training samples in the neighborhoods')
-            plt.savefig(path_exp + 'cKNN_' + dataset_kw + '_' + blackbox_name + '_' + 'K_' + str(K) + '.pdf')
-            plt.show(block=False)
-            plt.close()
-
-            # fDistribution bar plot
             fSorted = np.argsort(fDistribution)
-            plt.bar(range(len(X_train)), fDistribution[fSorted])
+            plt.bar(range(len(X_train)), cDistribution[cSorted], alpha = 0.5, color ='green')
+            plt.bar(range(len(X_train)), fDistribution[fSorted], alpha = 0.5, color ='brown')
             plt.xlabel('Training Samples')
             plt.ylabel('Number of Occurrence')
-            plt.title('Occurrence distribution of training samples in the neighborhoods')
-            plt.savefig(path_exp + 'fKNN_' + dataset_kw + '_' + blackbox_name + '_' + 'K_' + str(K) + '.pdf')
-            plt.show(block=False)
-            plt.close()
-
-            # pDistribution bar plot
-            pSorted = np.argsort(pDistribution)
-            plt.bar(range(len(X_train)), pDistribution[pSorted])
-            plt.xlabel('Training Samples')
-            plt.ylabel('Number of Occurrence')
-            plt.title('Occurrence distribution of training samples in the neighborhoods')
-            plt.savefig(path_exp + 'pKNN_' + dataset_kw + '_' + blackbox_name + '_' + 'K_' + str(K) + '.pdf')
+            data_name = str.upper(dataset_kw) if dataset_kw=='compas' else str.capitalize(dataset_kw)
+            plt.title('Occurrence distribution for ' +data_name+ ' data set')
+            plt.legend(['N_model_c', 'N_model_f'])
+            plt.savefig(path_exp + 'occurrence_distribution_' + dataset_kw +
+                        '_' + blackbox_name + '_' + 'K_' + str(K) + '.pdf')
             plt.show(block=False)
             plt.close()
 
