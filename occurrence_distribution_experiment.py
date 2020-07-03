@@ -65,6 +65,8 @@ def main():
             pred_train = blackbox.predict(X_train)
             surrogate = RandomForestClassifier(n_estimators=200)
             surrogate.fit(X_train, pred_train)
+
+            # Extracting observation-level feature contributions
             prediction, bias, contributions = ti.predict(surrogate, X_train)
             contributions_ = np.zeros(np.shape(X_train))
             for i in range(len(contributions_)):
