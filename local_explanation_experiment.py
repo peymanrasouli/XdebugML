@@ -110,7 +110,7 @@ def main():
                                                        N_samples=N_samples,
                                                        tau=tau)
 
-            # Reporting the results
+            # Printing the results
             print('\n')
             print('instance2explain =', str(dfX2E[index]))
             print('ground-truth =', str(y_train[anomaly_indices[index]]))
@@ -118,7 +118,7 @@ def main():
             print('explanation = %s' % exp_EXPLAN[1])
             print('\n')
 
-            # Writing the information to csv file
+            # Writing the results into the csv file
             results = '%s,%s\n%s,%s\n%s,%s\n%s,%s\n\n' % \
                       ('instance2explain =', str(dfX2E[index]),
                       'ground-truth =', str(y_train[anomaly_indices[index]]),
@@ -136,7 +136,7 @@ def main():
                                                            N_samples=N_samples,
                                                            tau=tau)
 
-                # Reporting the results
+                # Printing the results
                 dfx = dfX2E[rp_ind[b]]
                 print('representative %s = %s' % (b, dfx))
                 print('ground-truth  = %s' % y_train[rp_ind[b]])
@@ -144,7 +144,7 @@ def main():
                 print('explanation = %s' % exp_EXPLAN[1])
                 print('\n')
 
-                # Writing the information to csv file
+                # Writing the results into the csv file
                 results = '%s,%s\n%s,%s\n%s,%s\n%s,%s\n\n' % \
                           ('representaive ' + str(b) + ' =', str(dfx),
                           'ground-truth =', str(y_train[rp_ind[b]]),

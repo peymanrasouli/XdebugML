@@ -107,6 +107,7 @@ def main():
             fKNN = NearestNeighbors(n_neighbors=K).fit(X_train)
             pKNN = NearestNeighbors(n_neighbors=K).fit(pp_train)
 
+            # Main loop
             iter = 100
             n_test = 10
             for it in range(iter):
@@ -117,16 +118,17 @@ def main():
                                                   X_anomaly, n_test=n_test,
                                                   perturb_percent=perturb_percent)
 
+                # Printing the results
                 print('cKNN =', influence[0])
                 print('fKNN =', influence[1])
                 print('pKNN =', influence[2])
                 print('\n')
 
+                # Writing the results into the csv file
                 results = '%s,%s,%.3f,%d,%d,%.2f,%.4f,%.4f,%.4f\n' % \
                           (dataset_kw, blackbox_name, bb_accuracy,
                            it, K, perturb_percent,
                            influence[0], influence[1], influence[2])
-
                 experiment_results.write(results)
                 experiment_results.flush()
             experiment_results.close()

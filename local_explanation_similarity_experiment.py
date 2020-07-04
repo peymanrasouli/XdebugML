@@ -152,7 +152,7 @@ def main():
                 rp_ind_rnd = nbrs_cKNN[rp_ind_rnd]
                 rp_set_rnd = X_train[rp_ind_rnd]
 
-                # Explaining representative set by GA using EXPLAN
+                # Explaining the GA representative set using EXPLAN
                 tau = 250
                 N_samples = 3000
                 feature_names_ga = list()
@@ -175,7 +175,7 @@ def main():
                     same_class_anomaly_ga.append(int(sim1 and sim2))
                     same_class_ok_ga.append(int(sim1 and sim3))
 
-                # Explaining representative set by Random using EXPLAN
+                # Explaining the Random representative set using EXPLAN
                 tau = 250
                 N_samples = 3000
                 feature_names_rnd = list()
@@ -222,6 +222,7 @@ def main():
                             deviation = np.abs(n_features_rnd[i] - n_features_rnd[ii])
                             deviation_n_features_rnd.append(deviation)
 
+                # Printing the results
                 print('same_class_anomaly_ga  =', np.mean(same_class_anomaly_ga))
                 print('same_class_anomaly_rnd =', np.mean(same_class_anomaly_rnd))
                 print('same_class_ok_ga  =', np.mean(same_class_ok_ga))
@@ -232,6 +233,7 @@ def main():
                 print('deviation_n_features_rnd =', np.mean(deviation_n_features_rnd))
                 print('-------------------------------------------------------------')
 
+                # Writing the results into the csv file
                 results = '%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f' % (
                             np.mean(same_class_anomaly_ga),
                             np.mean(same_class_anomaly_rnd),
@@ -242,8 +244,6 @@ def main():
                             np.mean(deviation_n_features_ga),
                             np.mean(deviation_n_features_rnd)
                 )
-
-                # Writing the information to csv file
                 results = '%s\n' % (results)
                 experiment_results.write(results)
                 experiment_results.flush()
