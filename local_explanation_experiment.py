@@ -126,7 +126,7 @@ def main():
                       'explanation =', str(exp_EXPLAN[1]))
             experiment_results.write(results)
 
-            # Explaining representative set using EXPLAN
+            # Explaining the representative set using EXPLAN
             tau = 250
             N_samples = 3000
             for b in range(B):
