@@ -8,7 +8,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import NearestNeighbors
 from treeinterpreter import treeinterpreter as ti
 from alepython import ale_plot
-from matplotlib import pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -21,16 +20,16 @@ def main():
 
     # Defining the list of data sets
     datsets_list = {
-        'german': ('german_credit.csv', prepare_german_dataset),
-        # 'compas': ('compas-scores-two-years.csv', prepare_compass_dataset),
+        # 'german': ('german_credit.csv', prepare_german_dataset),
+        'compas': ('compas-scores-two-years.csv', prepare_compass_dataset),
         # 'adult': ('adult.csv', prepare_adult_dataset)
     }
 
     # Defining the list of black-boxes
     blackbox_list = {
-        'lr': LogisticRegression,
+        # 'lr': LogisticRegression,
         # 'gt': GradientBoostingClassifier,
-        # 'nn': MLPClassifier,
+        'nn': MLPClassifier,
     }
 
     K_list = {
@@ -93,16 +92,13 @@ def main():
             X_nbrs = X_train[nbrs_cKNN]
 
             features = dataset['columns'][1::]
-            df_nbrs = pd.DataFrame(data=X_nbrs, columns=features)
+            X_nbrs_df = pd.DataFrame(data=X_nbrs, columns=features)
 
-            unique = df_nbrs.nunique().to_numpy()
+            unique = X_nbrs_df.nunique().to_numpy()
             features = [features[f] for f in np.where(unique>1)[0]]
 
             for f in range(len(features)):
-                ale_plot(blackbox,df_nbrs,features[f], monte_carlo=False)
-                fig = plt.gcf()
-                fig.savefig(path_exp+str(index)+'_'+features[f]+'_'+dataset_kw+'_'+blackbox_name+'.pdf')
-                plt.close(fig)
+                ale_plot(blackbox, X_nbrs_df, features[f], monte_carlo=False)
 
 if __name__ == "__main__":
     main()
