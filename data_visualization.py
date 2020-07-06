@@ -1,8 +1,8 @@
 from EXPLAN.utils import *
 from sklearn.ensemble import RandomForestClassifier
 from treeinterpreter import treeinterpreter as ti
-import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 
