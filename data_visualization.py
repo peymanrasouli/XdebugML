@@ -24,34 +24,29 @@ dataset = prepare_dataset_fn(dataset_name, path_data)
 
 X,y = dataset['X'], dataset['y']
 
-rf = RandomForestClassifier(n_estimators=200)
-rf.fit(X,y)
-prediction, bias, contributions = ti.predict(rf, X)
+blackbox = RandomForestClassifier(n_estimators=200)
+blackbox.fit(X,y)
+prediction, bias, contributions = ti.predict(blackbox, X)
 contributions_ = np.zeros(np.shape(X))
 for i in range(len(contributions_)):
     contributions_[i, :] = contributions[i, :, np.argmax(prediction[i])]
 
-tsne =  TSNE(n_components=2)
-X_tsne = tsne.fit_transform(X)
+tsne_X =  TSNE(n_components=2)
+X_2D = tsne_X.fit_transform(X)
 
-tsne =  TSNE(n_components=2)
-C_tsne = tsne.fit_transform(contributions_)
+tsne_C =  TSNE(n_components=2)
+C_2D = tsne_C.fit_transform(contributions_)
 
-color = list()
-for l in y:
-    if l==0:
-        color.append('tab:blue')
-    else:
-        color.append('tab:pink')
+color = ['tab:blue' if l==0 else 'tab:pink' for l in y]
 
 plt.subplot(121)
-plt.scatter(X_tsne[:, 0], X_tsne[:, 1], s=6, c=color)
+plt.scatter(X_2D[:, 0], X_2D[:, 1], s=6, c=color)
 plt.title("Feature Values")
 plt.xticks([])
 plt.yticks([])
 
 plt.subplot(122)
-plt.scatter(C_tsne[:, 0], C_tsne[:, 1], s=6, c=color)
+plt.scatter(C_2D[:, 0], C_2D[:, 1], s=6, c=color)
 plt.title("Feature Contributions")
 plt.xticks([])
 plt.yticks([])
