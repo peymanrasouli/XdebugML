@@ -102,13 +102,14 @@ def main():
             # Plot the occurrence distributions
             cSorted = np.argsort(cDistribution)
             fSorted = np.argsort(fDistribution)
-            plt.bar(range(len(X_train)), cDistribution[cSorted], alpha = 0.5, color ='tab:blue')
-            plt.bar(range(len(X_train)), fDistribution[fSorted], alpha = 0.5, color ='tab:pink')
+            plt.plot(range(len(X_train)), cDistribution[cSorted], linewidth=2, color ='tab:blue')
+            plt.plot(range(len(X_train)), fDistribution[fSorted], linewidth=2, color ='tab:pink')
             plt.xlabel('Training Samples')
             plt.ylabel('Number of Occurrence')
             data_name = str.upper(dataset_kw) if dataset_kw=='compas' else str.capitalize(dataset_kw)
-            plt.title('Occurrence distribution for ' +data_name+ ' data set')
+            plt.title(data_name+ ' data set')
             plt.legend(['N_model_c', 'N_model_f'])
+            plt.grid()
             plt.savefig(path_exp + 'occurrence_distribution_' + dataset_kw +
                         '_' + blackbox_name + '_' + 'K_' + str(K) + '.pdf')
             plt.show(block=False)
