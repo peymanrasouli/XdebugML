@@ -43,9 +43,9 @@ sudo yum install tbb
 
 
 # Reproducing the results
-1- To reproduce the perturbation influence results run:
+1- To reproduce the neighborhood influence results run:
 ```
-python perturbation_influence_experiment.py
+python neighborhood_influence_experiment.py
 ```
 2- To reproduce the occurrence distribution results run:
 ```
