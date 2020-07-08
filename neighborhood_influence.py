@@ -31,7 +31,7 @@ def NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstru
         y_train_[perturbed_idx] = 1 - y_train_[perturbed_idx]
 
         # Creating the black box using the perturbed data
-        blackbox_ = BlackBoxConstructor()
+        blackbox_ = BlackBoxConstructor(random_state=42)
         blackbox_.fit(X_train, y_train_)
 
         # Testing influence
@@ -56,7 +56,7 @@ def NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstru
         y_train_[perturbed_idx] = 1 - y_train_[perturbed_idx]
 
         # Creating the black box using the perturbed data
-        blackbox_ = BlackBoxConstructor()
+        blackbox_ = BlackBoxConstructor(random_state=42)
         blackbox_.fit(X_train, y_train_)
 
         # Testing influence
@@ -81,7 +81,7 @@ def NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstru
         y_train_[perturbed_idx] = 1 - y_train_[perturbed_idx]
 
         # Creating the black box using the perturbed data
-        blackbox_ = BlackBoxConstructor()
+        blackbox_ = BlackBoxConstructor(random_state=42)
         blackbox_.fit(X_train, y_train_)
 
         # Testing influence

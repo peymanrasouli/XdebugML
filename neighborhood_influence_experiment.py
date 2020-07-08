@@ -56,7 +56,7 @@ def main():
 
             # Creating and training black-box
             BlackBoxConstructor = blackbox_list[blackbox_name]
-            blackbox = BlackBoxConstructor()
+            blackbox = BlackBoxConstructor(random_state=42)
             blackbox.fit(X_train, y_train)
             pred_test = blackbox.predict(X_test)
             bb_accuracy = accuracy_score(y_test, pred_test)
@@ -112,7 +112,7 @@ def main():
             n_test = 10
             for it in range(iter):
                 print('Iteration=', it)
-                perturb_percent = 0.5
+                perturb_percent = 1
                 influence = NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN,
                                                   BlackBoxConstructor, X_train, y_train,
                                                   X_anomaly, n_test=n_test,
