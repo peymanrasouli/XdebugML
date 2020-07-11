@@ -1,6 +1,7 @@
 from EXPLAN.utils import *
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
@@ -48,6 +49,7 @@ def main():
 
         # Splitting the data set into train and test sets
         X, y = dataset['X'], dataset['y']
+        X = MinMaxScaler().fit_transform(X)
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         for blackbox_name in blackbox_list:
