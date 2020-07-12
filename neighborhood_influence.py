@@ -1,5 +1,5 @@
+from utils import *
 import numpy as np
-from treeinterpreter import treeinterpreter as ti
 
 def NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstructor,
                           X_train, y_train, X_anomaly, n_test=10,perturb_percent=0.75):
@@ -18,7 +18,7 @@ def NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstru
         ########################################## cKNN ##########################################
 
         ## Achieve neighborhood samples using cKNN method
-        prediction_x, bias_x, contribution_x = ti.predict(surrogate, X_anomaly[i].reshape(1, -1))
+        prediction_x, bias_x, contribution_x = treeinterpreter.predict(surrogate, X_anomaly[i].reshape(1, -1))
         _, nbrs_cKNN = cKNN.kneighbors(contribution_x[:,:,np.argmax(prediction_x)].reshape(1, -1))
         nbrs_cKNN = nbrs_cKNN[0]
 

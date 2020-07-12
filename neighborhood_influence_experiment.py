@@ -1,5 +1,5 @@
 import os
-from EXPLAN.utils import *
+from utils import *
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import MinMaxScaler
@@ -8,7 +8,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import NearestNeighbors
-from treeinterpreter import treeinterpreter as ti
 from neighborhood_influence import NeighborhoodInfluence
 import warnings
 warnings.filterwarnings("ignore")
@@ -94,7 +93,7 @@ def main():
             surrogate.fit(X_train, pred_train)
 
             # Extracting observation-level feature contributions
-            prediction, bias, contributions = ti.predict(surrogate, X_train)
+            prediction, bias, contributions = treeinterpreter.predict(surrogate, X_train)
             contributions_ = np.zeros(np.shape(X_train))
             for i in range(len(contributions_)):
                 contributions_[i, :] = contributions[i, :, np.argmax(prediction[i])]

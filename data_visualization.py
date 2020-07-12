@@ -1,6 +1,5 @@
-from EXPLAN.utils import *
+from utils import *
 from sklearn.ensemble import RandomForestClassifier
-from treeinterpreter import treeinterpreter as ti
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
@@ -31,7 +30,7 @@ X,y = dataset['X'], dataset['y']
 # Extracting feature contributions using TreeInterpreter
 blackbox = RandomForestClassifier(n_estimators=200)
 blackbox.fit(X,y)
-prediction, bias, contributions = ti.predict(blackbox, X)
+prediction, bias, contributions = treeinterpreter.predict(blackbox, X)
 contributions_ = np.zeros(np.shape(X))
 for i in range(len(contributions_)):
     contributions_[i, :] = contributions[i, :, np.argmax(prediction[i])]
