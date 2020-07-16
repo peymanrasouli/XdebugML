@@ -25,11 +25,15 @@ pip install -r requirements.txt
 ```
 pip install git+https://github.com/MaximeJumelle/ALEPython.git@dev#egg=alepython
 ```
-6- Run initial setup:
+6- Install SHAP package:
+```
+pip install git+https://github.com/slundberg/shap.git
+```
+7- Run initial setup:
 ```
 python setup.py
 ```
-7- Install TBB library required by EXPLAN:
+8- Install TBB library required by EXPLAN:
 ```
 # Ubuntu/Debian
 sudo apt-get update
@@ -61,5 +65,3 @@ python local_explanation_experiment.py
 ```
 python global_explanation_experiment.py
 ```
-
-
