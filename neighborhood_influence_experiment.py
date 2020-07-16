@@ -4,10 +4,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neural_network import MLPClassifier
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import NearestNeighbors
+from contribution_extraction import ContributionExtraction
 from neighborhood_influence import NeighborhoodInfluence
 import warnings
 warnings.filterwarnings("ignore")
@@ -59,6 +59,8 @@ def main():
             BlackBoxConstructor = blackbox_list[blackbox_name]
             blackbox = BlackBoxConstructor(random_state=42)
             blackbox.fit(X_train, y_train)
+            pred_train = blackbox.predict(X_train)
+            pp_train = blackbox.predict_proba(X_train)
             pred_test = blackbox.predict(X_test)
             bb_accuracy = accuracy_score(y_test, pred_test)
             print('blackbox accuracy=', bb_accuracy)
@@ -86,17 +88,9 @@ def main():
                        '=stdev(H4:H1000)', '=stdev(I4:I1000)',)
             experiment_results.write(results)
 
-            # Constructing a Random Forest as surrogate model
-            pred_train = blackbox.predict(X_train)
-            pp_train = blackbox.predict_proba(X_train)
-            surrogate = RandomForestClassifier(n_estimators=200)
-            surrogate.fit(X_train, pred_train)
-
-            # Extracting observation-level feature contributions
-            prediction, bias, contributions = treeinterpreter.predict(surrogate, X_train)
-            contributions_ = np.zeros(np.shape(X_train))
-            for i in range(len(contributions_)):
-                contributions_[i, :] = contributions[i, :, np.argmax(prediction[i])]
+            # Extracting instance-level feature contributions
+            # method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
+            contributions, extractor = ContributionExtraction(blackbox, X_train, method='tree_interpreter')
 
             # Finding anomaly instances in the train set
             anomaly_indices = np.where(pred_train != y_train)[0]
@@ -104,7 +98,7 @@ def main():
 
             # Creating KNN models for contribution values, feature values, and prediction probabilities
             K = K_list[dataset_kw]
-            cKNN = NearestNeighbors(n_neighbors=K).fit(contributions_)
+            cKNN = NearestNeighbors(n_neighbors=K).fit(contributions)
             fKNN = NearestNeighbors(n_neighbors=K).fit(X_train)
             pKNN = NearestNeighbors(n_neighbors=K).fit(pp_train)
 
@@ -114,7 +108,7 @@ def main():
             for it in range(iter):
                 print('Iteration=', it)
                 perturb_percent = 1
-                influence = NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN,
+                influence = NeighborhoodInfluence(blackbox, extractor, cKNN, fKNN, pKNN,
                                                   BlackBoxConstructor, X_train, y_train,
                                                   X_anomaly, n_test=n_test,
                                                   perturb_percent=perturb_percent)

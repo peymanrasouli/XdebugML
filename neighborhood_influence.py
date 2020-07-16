@@ -1,7 +1,6 @@
-from utils import *
 import numpy as np
 
-def NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstructor,
+def NeighborhoodInfluence(blackbox, extractor, cKNN, fKNN, pKNN, BlackBoxConstructor,
                           X_train, y_train, X_anomaly, n_test=10,perturb_percent=0.75):
 
     ind = np.random.choice(len(X_anomaly),size=n_test,replace=False)
@@ -18,9 +17,8 @@ def NeighborhoodInfluence(blackbox, surrogate, cKNN, fKNN, pKNN, BlackBoxConstru
         ########################################## cKNN ##########################################
 
         ## Achieve neighborhood samples using cKNN method
-        prediction_x, bias_x, contribution_x = treeinterpreter.predict(surrogate, X_anomaly[i].reshape(1, -1))
-        _, nbrs_cKNN = cKNN.kneighbors(contribution_x[:,:,np.argmax(prediction_x)].reshape(1, -1))
-        nbrs_cKNN = nbrs_cKNN[0]
+        contribution_x = extractor(X_anomaly[i])
+        _, nbrs_cKNN = cKNN.kneighbors(contribution_x.reshape(1, -1))
 
         ## Perturb the label of the data inside the neighborhood
         y_train_ = y_train.copy()

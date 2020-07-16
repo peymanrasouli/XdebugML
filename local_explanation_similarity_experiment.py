@@ -4,10 +4,10 @@ from EXPLAN import explan
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.neural_network import MLPClassifier
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import NearestNeighbors
+from contribution_extraction import ContributionExtraction
 from representative_pick import RepresentativePick
 import warnings
 warnings.filterwarnings("ignore")
@@ -28,8 +28,8 @@ def main():
 
     # Defining the list of black-boxes
     blackbox_list = {
-        'lr': LogisticRegression,
-        'gt': GradientBoostingClassifier,
+        # 'lr': LogisticRegression,
+        # 'gt': GradientBoostingClassifier,
         'nn': MLPClassifier,
 
     }
@@ -60,6 +60,7 @@ def main():
             BlackBoxConstructor = blackbox_list[blackbox_name]
             blackbox = BlackBoxConstructor()
             blackbox.fit(X_train, y_train)
+            pred_train = blackbox.predict(X_train)
             pred_test = blackbox.predict(X_test)
             bb_accuracy = accuracy_score(y_test, pred_test)
             print('blackbox accuracy=', bb_accuracy)
@@ -96,16 +97,9 @@ def main():
             experiment_results.write(results)
             experiment_results.flush()
 
-            # Constructing a Random Forest as surrogate model
-            pred_train = blackbox.predict(X_train)
-            surrogate = RandomForestClassifier(n_estimators=200)
-            surrogate.fit(X_train, pred_train)
-
-            # Extracting observation-level feature contributions
-            prediction, bias, contributions = treeinterpreter.predict(surrogate, X_train)
-            contributions_ = np.zeros(np.shape(X_train))
-            for i in range(len(contributions_)):
-                contributions_[i,:] = contributions[i,:,np.argmax(prediction[i])]
+            # Extracting instance-level feature contributions
+            # method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
+            contributions, extractor = ContributionExtraction(blackbox, X_train, method='tree_interpreter')
 
             # Finding anomaly instances in the train set
             anomaly_indices = np.where(pred_train != y_train)[0]
@@ -113,7 +107,7 @@ def main():
 
             # Creating a KNN model for contribution values
             K = K_list[dataset_kw]
-            cKNN = NearestNeighbors(n_neighbors=K).fit(contributions_)
+            cKNN = NearestNeighbors(n_neighbors=K).fit(contributions)
 
             # Selecting instances to explain
             N = 100
@@ -134,14 +128,14 @@ def main():
                 same_class_ok_rnd = list()
 
                 instance2explain = X_anomaly[index]
-                prediction_x, bias_x, contribution_x = treeinterpreter.predict(surrogate, instance2explain.reshape(1, -1))
-                _, nbrs_cKNN = cKNN.kneighbors(contribution_x[:, :, np.argmax(prediction_x)].reshape(1, -1))
+                contribution_x = extractor(instance2explain)
+                _, nbrs_cKNN = cKNN.kneighbors(contribution_x.reshape(1, -1))
                 nbrs_cKNN = nbrs_cKNN[0]
 
                 # Picking representative samples using GA
-                contributions_x = contributions_[nbrs_cKNN]
+                contributions_nbrs = contributions[nbrs_cKNN]
                 try:
-                    rp_ind_ga = RepresentativePick(B, contributions_x, nbrs_cKNN)
+                    rp_ind_ga = RepresentativePick(B, contributions_nbrs, nbrs_cKNN)
                 except Exception:
                     rp_ind_ga = np.random.choice(range(len(nbrs_cKNN)), size=B, replace=False)
                 rp_set_ga = X_train[rp_ind_ga]

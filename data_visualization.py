@@ -1,7 +1,8 @@
 from utils import *
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
+from contribution_extraction import ContributionExtraction
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
@@ -19,25 +20,25 @@ datsets_list = {
 }
 
 # Selecting the data and the dimensionality reduction method
-data = 'german' # 'german' | 'compas' | 'adult'
-method = TSNE    # TSNE | PCA
+data = 'german'  # 'german' | 'compas' | 'adult'
+method = PCA    # TSNE | PCA
 
 # Reading a data set
 dataset_name, prepare_dataset_fn = datsets_list[data]
 dataset = prepare_dataset_fn(dataset_name, path_data)
 X,y = dataset['X'], dataset['y']
 
-# Extracting feature contributions using TreeInterpreter
-blackbox = RandomForestClassifier(n_estimators=200)
+# Creating a black-box model
+blackbox = LogisticRegression()
 blackbox.fit(X,y)
-prediction, bias, contributions = treeinterpreter.predict(blackbox, X)
-contributions_ = np.zeros(np.shape(X))
-for i in range(len(contributions_)):
-    contributions_[i, :] = contributions[i, :, np.argmax(prediction[i])]
+
+# Extracting instance-level feature contributions
+# method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
+contributions, extractor = ContributionExtraction(blackbox, X, method='tree_interpreter')
 
 # Dimensionality reduction
 X2D = method(n_components=2).fit_transform(X)
-C2D = method(n_components=2).fit_transform(contributions_)
+C2D = method(n_components=2).fit_transform(contributions)
 
 # Plotting the distribution of the data in both spaces
 color = ['tab:blue' if l==0 else 'tab:pink' for l in y]
