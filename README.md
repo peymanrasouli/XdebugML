@@ -65,3 +65,7 @@ python local_explanation_experiment.py
 ```
 python global_explanation_experiment.py
 ```
+6- To visualize feature values vs. contribution values run:
+```
+python data_visualization.py
+```
