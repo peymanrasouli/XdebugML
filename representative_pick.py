@@ -1,12 +1,12 @@
 import numpy as np
 from GA import ga
 
-def RepresentativePick(B, N_top, contributions_nbrs, nbrs_cKNN):
+def RepresentativePick(B, NF, contributions_nbrs, nbrs_cKNN):
 
     # Finding most important features
     contributions_nbrs = np.abs(contributions_nbrs)
     con_sorted = np.argsort(-contributions_nbrs)
-    con_sorted = con_sorted[:,:N_top]
+    con_sorted = con_sorted[:,:NF]
     feature_list = np.unique(con_sorted)
 
     # Creating weight matrix of contributions

@@ -90,9 +90,9 @@ def main():
 
             # Picking representative samples
             B = 10
-            N_top = 5
+            NF = 5
             contributions_nbrs = contributions[nbrs_cKNN]
-            rp_ind = RepresentativePick(B, N_top, contributions_nbrs, nbrs_cKNN)
+            rp_ind = RepresentativePick(B, NF, contributions_nbrs, nbrs_cKNN)
             rp_set = X_train[rp_ind]
 
             # Explaining isntance2explain using EXPLAN

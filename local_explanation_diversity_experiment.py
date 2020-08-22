@@ -115,7 +115,7 @@ def main():
 
             # Main Loop
             B = 10
-            N_top = 5
+            NF = 5
             for i,index in zip(range(len(indices)),indices):
                 print('Anomaly instance=',i)
                 jaccard_feature_names_ga = list()
@@ -136,7 +136,7 @@ def main():
                 # Picking representative samples using GA
                 contributions_nbrs = contributions[nbrs_cKNN]
                 try:
-                    rp_ind_ga = RepresentativePick(B, N_top, contributions_nbrs, nbrs_cKNN)
+                    rp_ind_ga = RepresentativePick(B, NF, contributions_nbrs, nbrs_cKNN)
                 except Exception:
                     rp_ind_ga = np.random.choice(range(len(nbrs_cKNN)), size=B, replace=False)
                 rp_set_ga = X_train[rp_ind_ga]
