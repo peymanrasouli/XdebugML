@@ -15,8 +15,7 @@ def FitnessFunction(R, W, Wb, B):
 
     fitness = np.dot(values,weights)
 
-    if len(np.unique(R)) != B:
-        fitness = 0
+    fitness = 0 if len(np.unique(R)) != B else fitness
 
     out = {
         'weights': weights,
