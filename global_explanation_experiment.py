@@ -55,7 +55,7 @@ def main():
 
             # Creating and training black-box
             BlackBoxConstructor = blackbox_list[blackbox_name]
-            blackbox = BlackBoxConstructor()
+            blackbox = BlackBoxConstructor(random_state=42)
             blackbox.fit(X_train, y_train)
             pred_train = blackbox.predict(X_train)
             pred_test = blackbox.predict(X_test)

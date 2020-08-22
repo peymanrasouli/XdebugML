@@ -29,12 +29,12 @@ dataset = prepare_dataset_fn(dataset_name, path_data)
 X,y = dataset['X'], dataset['y']
 
 # Creating a black-box model
-blackbox = LogisticRegression()
+blackbox = LogisticRegression(random_state=42)
 blackbox.fit(X,y)
 
 # Extracting instance-level feature contributions
 # method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
-contributions, extractor = ContributionExtraction(blackbox, X, method='tree_interpreter')
+contributions, extractor = ContributionExtraction(blackbox, X, method='shapley_sampling_values')
 
 # Dimensionality reduction
 X2D = method(n_components=2).fit_transform(X)

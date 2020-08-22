@@ -56,7 +56,7 @@ def main():
 
             # Creating and training black-box
             BlackBoxConstructor = blackbox_list[blackbox_name]
-            blackbox = BlackBoxConstructor()
+            blackbox = BlackBoxConstructor(random_state=42)
             blackbox.fit(X_train, y_train)
             pred_train = blackbox.predict(X_train)
             pred_test = blackbox.predict(X_test)
@@ -71,7 +71,7 @@ def main():
 
             # Extracting instance-level feature contributions
             # method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
-            contributions, extractor = ContributionExtraction(blackbox, X_train, method='tree_interpreter')
+            contributions, extractor = ContributionExtraction(blackbox, X_train, method='shapley_sampling_values')
 
             # Finding anomaly instances in the train set
             anomaly_indices = np.where(pred_train != y_train)[0]
@@ -90,8 +90,9 @@ def main():
 
             # Picking representative samples
             B = 10
+            N_top = 5
             contributions_nbrs = contributions[nbrs_cKNN]
-            rp_ind = RepresentativePick(B, contributions_nbrs, nbrs_cKNN)
+            rp_ind = RepresentativePick(B, N_top, contributions_nbrs, nbrs_cKNN)
             rp_set = X_train[rp_ind]
 
             # Explaining isntance2explain using EXPLAN

@@ -11,7 +11,7 @@ def FitnessFunction(R, W, Wb, B):
     values = np.sum(W_,axis=0)
 
     weights = variation(Wb_, axis=0)
-    weights[np.isnan(weights)] = 0
+    weights[np.isnan(weights)] = 1
 
     fitness = np.dot(values,weights)
 

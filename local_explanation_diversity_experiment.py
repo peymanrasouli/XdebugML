@@ -28,8 +28,8 @@ def main():
 
     # Defining the list of black-boxes
     blackbox_list = {
-        # 'lr': LogisticRegression,
-        # 'gt': GradientBoostingClassifier,
+        'lr': LogisticRegression,
+        'gt': GradientBoostingClassifier,
         'nn': MLPClassifier,
 
     }
@@ -58,7 +58,7 @@ def main():
 
             # Creating and training black-box
             BlackBoxConstructor = blackbox_list[blackbox_name]
-            blackbox = BlackBoxConstructor()
+            blackbox = BlackBoxConstructor(random_state=42)
             blackbox.fit(X_train, y_train)
             pred_train = blackbox.predict(X_train)
             pred_test = blackbox.predict(X_test)
@@ -99,7 +99,7 @@ def main():
 
             # Extracting instance-level feature contributions
             # method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
-            contributions, extractor = ContributionExtraction(blackbox, X_train, method='tree_interpreter')
+            contributions, extractor = ContributionExtraction(blackbox, X_train, method='shapley_sampling_values')
 
             # Finding anomaly instances in the train set
             anomaly_indices = np.where(pred_train != y_train)[0]
@@ -115,6 +115,7 @@ def main():
 
             # Main Loop
             B = 10
+            N_top = 5
             for i,index in zip(range(len(indices)),indices):
                 print('Anomaly instance=',i)
                 jaccard_feature_names_ga = list()
@@ -135,7 +136,7 @@ def main():
                 # Picking representative samples using GA
                 contributions_nbrs = contributions[nbrs_cKNN]
                 try:
-                    rp_ind_ga = RepresentativePick(B, contributions_nbrs, nbrs_cKNN)
+                    rp_ind_ga = RepresentativePick(B, N_top, contributions_nbrs, nbrs_cKNN)
                 except Exception:
                     rp_ind_ga = np.random.choice(range(len(nbrs_cKNN)), size=B, replace=False)
                 rp_set_ga = X_train[rp_ind_ga]
