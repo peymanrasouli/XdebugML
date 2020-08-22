@@ -47,23 +47,23 @@ sudo yum install tbb
 # Reproducing the results
 1- To reproduce the neighborhood influence results run:
 ```
-python neighborhood_influence_experiment.py
+python neighborhood_influence.py
 ```
 2- To reproduce the occurrence distribution results run:
 ```
-python occurrence_distribution_experiment.py
+python occurrence_distribution.py
 ```
-3- To reproduce the local explanation similarity results run:
+3- To explain an instance using the quasi-global explanation method run:
 ```
-python local_explanation_similarity_experiment.py
+python quasi_global_explanation.py
 ```
-4- To explain an anomaly instance locally using EXPLAN method run:
+4- To reproduce the quasi-global explanation diversity results run:
 ```
-python local_explanation_experiment.py
+python quasi_global_explanation_diversity.py
 ```
-5- To explain an anomaly instance globally using ALE plots run:
+5- To explain an instance globally run:
 ```
-python global_explanation_experiment.py
+python global_explanation.py
 ```
 6- To visualize feature values vs. contribution values run:
 ```
