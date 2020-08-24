@@ -49,9 +49,9 @@ sudo yum install tbb
 ```
 python neighborhood_influence.py
 ```
-2- To reproduce the occurrence distribution results run:
+2- To reproduce the occurrence histogram results run:
 ```
-python occurrence_distribution.py
+python occurrence_histogram.py
 ```
 3- To explain an instance using the quasi-global explanation method run:
 ```
