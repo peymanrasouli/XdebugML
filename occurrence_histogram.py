@@ -37,7 +37,7 @@ def main():
         'adult': 2000
     }
 
-    print('Occurrence distribution experiment is running...')
+    print('Occurrence histogram experiment is running...')
 
     for dataset_kw in datsets_list:
         print('dataset=', dataset_kw)
@@ -76,33 +76,33 @@ def main():
             cKNN = NearestNeighbors(n_neighbors=K).fit(contributions)
             fKNN = NearestNeighbors(n_neighbors=K).fit(X_train)
 
-            # Finding occurrence distribution of training samples in the neighborhood of anomalies
-            cDistribution = np.zeros(len(X_train))
-            fDistribution = np.zeros(len(X_train))
+            # Finding occurrence histogram of training samples in the neighborhood of anomalies
+            cHistogram = np.zeros(len(X_train))
+            fHistogram = np.zeros(len(X_train))
 
             # cKNN
             contributions = extractor(X_anomaly)
             _, nbrs_cKNN = cKNN.kneighbors(contributions)
             for n in (nbrs_cKNN):
-                cDistribution[n] = cDistribution[n] + 1
+                cHistogram[n] = cHistogram[n] + 1
 
             # fKNN
             _, nbrs_fKNN = fKNN.kneighbors(X_anomaly)
             for n in (nbrs_fKNN):
-                fDistribution[n] = fDistribution[n] + 1
+                fHistogram[n] = fHistogram[n] + 1
 
-            # Plot the occurrence distributions
-            cSorted = np.argsort(cDistribution)
-            fSorted = np.argsort(fDistribution)
-            plt.plot(range(len(X_train)), cDistribution[cSorted], linewidth=2, color ='tab:blue')
-            plt.plot(range(len(X_train)), fDistribution[fSorted], linewidth=2, color ='tab:pink')
+            # Plot the occurrence histograms
+            cSorted = np.argsort(cHistogram)
+            fSorted = np.argsort(fHistogram)
+            plt.plot(range(len(X_train)), cHistogram[cSorted], linewidth=2, color ='#be5683')
+            plt.plot(range(len(X_train)), fHistogram[fSorted], linewidth=2, color ='#93b5e1')
             plt.xlabel('Training Samples')
             plt.ylabel('Number of Occurrence')
             data_name = str.upper(dataset_kw) if dataset_kw=='compas' else str.capitalize(dataset_kw)
             plt.title(data_name+ ' data set')
             plt.legend(['N_model_c', 'N_model_f'])
             plt.grid()
-            plt.savefig(path_exp + 'occurrence_distribution_' + dataset_kw +
+            plt.savefig(path_exp + 'occurrence_histogram_' + dataset_kw +
                         '_' + blackbox_name + '_' + 'K_' + str(K) + '.pdf')
             plt.show(block=False)
             plt.close()

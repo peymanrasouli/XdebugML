@@ -21,7 +21,7 @@ datsets_list = {
 
 # Selecting the data and the dimensionality reduction method
 data = 'german'  # 'german' | 'compas' | 'adult'
-method = PCA    # TSNE | PCA
+method = TSNE    # TSNE | PCA
 
 # Reading a data set
 dataset_name, prepare_dataset_fn = datsets_list[data]
@@ -41,7 +41,7 @@ X2D = method(n_components=2).fit_transform(X)
 C2D = method(n_components=2).fit_transform(contributions)
 
 # Plotting the distribution of the data in both spaces
-color = ['tab:blue' if l==0 else 'tab:pink' for l in y]
+color = ['#be5683' if l==0 else '#93b5e1' for l in y]
 
 plt.subplot(121)
 plt.scatter(X2D[:, 0], X2D[:, 1], s=6, c=color)
