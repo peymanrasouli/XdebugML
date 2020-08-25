@@ -26,9 +26,9 @@ def main():
 
     # Defining the list of black-boxes
     blackbox_list = {
-        # 'lr': LogisticRegression,
+        'lr': LogisticRegression,
         'gt': GradientBoostingClassifier,
-        # 'nn': MLPClassifier
+        'nn': MLPClassifier
     }
 
     K_list = {
@@ -94,8 +94,8 @@ def main():
             # Plot the occurrence histograms
             cSorted = np.argsort(cHistogram)
             fSorted = np.argsort(fHistogram)
-            plt.plot(range(len(X_train)), cHistogram[cSorted], linewidth=2, color ='#be5683')
-            plt.plot(range(len(X_train)), fHistogram[fSorted], linewidth=2, color ='#93b5e1')
+            plt.plot(range(len(X_train)), cHistogram[cSorted], linewidth=2, color ='#f60c86')
+            plt.plot(range(len(X_train)), fHistogram[fSorted], linewidth=2, color ='#2e89ba')
             plt.xlabel('Training Samples')
             plt.ylabel('Number of Occurrence')
             data_name = str.upper(dataset_kw) if dataset_kw=='compas' else str.capitalize(dataset_kw)

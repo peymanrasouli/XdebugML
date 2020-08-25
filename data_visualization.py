@@ -1,5 +1,5 @@
 from utils import *
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 from contribution_extraction import ContributionExtraction
@@ -29,7 +29,7 @@ dataset = prepare_dataset_fn(dataset_name, path_data)
 X,y = dataset['X'], dataset['y']
 
 # Creating a black-box model
-blackbox = LogisticRegression(random_state=42)
+blackbox = RandomForestClassifier(random_state=42)
 blackbox.fit(X,y)
 
 # Extracting instance-level feature contributions
@@ -41,16 +41,16 @@ X2D = method(n_components=2).fit_transform(X)
 C2D = method(n_components=2).fit_transform(contributions)
 
 # Plotting the distribution of the data in both spaces
-color = ['#be5683' if l==0 else '#93b5e1' for l in y]
+color = ['#2e89ba' if l==0 else '#f60c86' for l in y]
 
 plt.subplot(121)
-plt.scatter(X2D[:, 0], X2D[:, 1], s=6, c=color)
+plt.scatter(X2D[:, 0], X2D[:, 1], s=3, c=color, marker='o')
 plt.title("Feature Values")
 plt.xticks([])
 plt.yticks([])
 
 plt.subplot(122)
-plt.scatter(C2D[:, 0], C2D[:, 1], s=6, c=color)
+plt.scatter(C2D[:, 0], C2D[:, 1], s=3, c=color, marker='o')
 plt.title("Feature Contributions")
 plt.xticks([])
 plt.yticks([])
