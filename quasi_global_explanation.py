@@ -38,7 +38,7 @@ def main():
         'adult': 2000
     }
 
-    print('Local explanation experiment is running...')
+    print('Quasi-global explanation experiment is running...')
 
     for dataset_kw in datsets_list:
         print('dataset=', dataset_kw)
@@ -66,7 +66,7 @@ def main():
             dfX2E = build_df2explain(blackbox, X_train, dataset).to_dict('records')
 
             # Creating/opening a csv file for storing results
-            experiment_results = open(path_exp + 'local_explanation_results_%s_%s_%s.csv' %
+            experiment_results = open(path_exp + 'quasi_global_explanation_results_%s_%s_%s.csv' %
                                       (dataset_kw, blackbox_name, 'K_' + str(K_list[dataset_kw])), 'a')
 
             # Extracting instance-level feature contributions

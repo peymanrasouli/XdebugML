@@ -40,7 +40,7 @@ def main():
         'adult': 2000
     }
 
-    print('Local explanation similarity experiment is running...')
+    print('Quasi-global explanation diversity experiment is running...')
 
     for dataset_kw in datsets_list:
         print('dataset=',dataset_kw)
@@ -67,17 +67,17 @@ def main():
             print('\n')
 
             # Creating/opening a csv file for storing results
-            exists = os.path.isfile(path_exp + 'local_explanation_similarity_results_%s_%s_%s.csv' %
+            exists = os.path.isfile(path_exp + 'quasi_global_explanation_diversity_results_%s_%s_%s.csv' %
                                       (dataset_kw, blackbox_name,'K_'+str(K_list[dataset_kw])))
             if exists:
-                os.remove(path_exp + 'local_explanation_similarity_results_%s_%s_%s.csv' %
+                os.remove(path_exp + 'quasi_global_explanation_diversity_results_%s_%s_%s.csv' %
                                       (dataset_kw, blackbox_name,'K_'+str(K_list[dataset_kw])))
-            experiment_results = open(path_exp + 'local_explanation_similarity_results_%s_%s_%s.csv' %
+            experiment_results = open(path_exp + 'quasi_global_explanation_diversity_results_%s_%s_%s.csv' %
                                       (dataset_kw, blackbox_name,'K_'+str(K_list[dataset_kw])), 'a')
 
             results = '%s,%s,%s,%s,%s,%s,%s,%s\n' % \
-                      ('same_class_anomaly_ga', 'same_class_anomaly_rnd',
-                       'same_class_ok_ga', 'same_class_ok_rnd',
+                      ('same_pred_anomaly_ga', 'same_pred_anomaly_rnd',
+                       'same_pred_ok_ga', 'same_pred_ok_rnd',
                        'jaccard_feature_names_ga', 'jaccard_feature_names_rnd',
                        'deviation_n_features_ga', 'deviation_n_features_rnd')
             experiment_results.write(results)
@@ -120,13 +120,13 @@ def main():
                 print('Anomaly instance=',i)
                 jaccard_feature_names_ga = list()
                 deviation_n_features_ga = list()
-                same_class_anomaly_ga = list()
-                same_class_ok_ga = list()
+                same_pred_anomaly_ga = list()
+                same_pred_ok_ga = list()
 
                 jaccard_feature_names_rnd = list()
                 deviation_n_features_rnd = list()
-                same_class_anomaly_rnd = list()
-                same_class_ok_rnd = list()
+                same_pred_anomaly_rnd = list()
+                same_pred_ok_rnd = list()
 
                 instance2explain = X_anomaly[index]
                 contribution_x = extractor(instance2explain)
@@ -164,10 +164,10 @@ def main():
                     feature_values_ga.append(rule_EXPLAN)
                     n_features_ga.append(len(list(rule_EXPLAN.keys())))
                     sim1 = y_train[anomaly_indices[index]] == y_train[rp_ind_ga[b]]
-                    sim2 = pred_train[anomaly_indices[index]] == pred_train[rp_ind_ga[b]]
-                    sim3 = pred_train[anomaly_indices[index]] != pred_train[rp_ind_ga[b]]
-                    same_class_anomaly_ga.append(int(sim1 and sim2))
-                    same_class_ok_ga.append(int(sim1 and sim3))
+                    sim2 = y_train[anomaly_indices[index]] != y_train[rp_ind_ga[b]]
+                    sim3 = pred_train[anomaly_indices[index]] == pred_train[rp_ind_ga[b]]
+                    same_pred_anomaly_ga.append(int(sim1 and sim3))
+                    same_pred_ok_ga.append(int(sim2 and sim3))
 
                 # Explaining the Random representative set using EXPLAN
                 tau = 250
@@ -186,11 +186,11 @@ def main():
                     feature_names_rnd.append(list(rule_EXPLAN.keys()))
                     feature_values_rnd.append(rule_EXPLAN)
                     n_features_rnd.append(len(list(rule_EXPLAN.keys())))
-                    sim1 = int(y_train[anomaly_indices[index]] == y_train[rp_ind_rnd[b]])
-                    sim2 = int(pred_train[anomaly_indices[index]] == pred_train[rp_ind_rnd[b]])
-                    sim3 = int(pred_train[anomaly_indices[index]] != pred_train[rp_ind_rnd[b]])
-                    same_class_anomaly_rnd.append(int(sim1 and sim2))
-                    same_class_ok_rnd.append(int(sim1 and sim3))
+                    sim1 = y_train[anomaly_indices[index]] == y_train[rp_ind_rnd[b]]
+                    sim2 = y_train[anomaly_indices[index]] != y_train[rp_ind_rnd[b]]
+                    sim3 = pred_train[anomaly_indices[index]] == pred_train[rp_ind_rnd[b]]
+                    same_pred_anomaly_rnd.append(int(sim1 and sim3))
+                    same_pred_ok_rnd.append(int(sim2 and sim3))
 
                 # Calculating explanation comparison metrics
                 for i in range(0, B):
@@ -217,10 +217,10 @@ def main():
                             deviation_n_features_rnd.append(deviation)
 
                 # Printing the results
-                print('same_class_anomaly_ga  =', np.mean(same_class_anomaly_ga))
-                print('same_class_anomaly_rnd =', np.mean(same_class_anomaly_rnd))
-                print('same_class_ok_ga  =', np.mean(same_class_ok_ga))
-                print('same_class_ok_rnd =', np.mean(same_class_ok_rnd))
+                print('same_pred_anomaly_ga  =', np.mean(same_pred_anomaly_ga))
+                print('same_pred_anomaly_rnd =', np.mean(same_pred_anomaly_rnd))
+                print('same_pred_ok_ga  =', np.mean(same_pred_ok_ga))
+                print('same_pred_ok_rnd =', np.mean(same_pred_ok_rnd))
                 print('jaccard_feature_names_ga  =', np.mean(jaccard_feature_names_ga))
                 print('jaccard_feature_names_rnd =', np.mean(jaccard_feature_names_rnd))
                 print('deviation_n_features_ga  =', np.mean(deviation_n_features_ga))
@@ -229,10 +229,10 @@ def main():
 
                 # Writing the results into the csv file
                 results = '%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f' % (
-                            np.mean(same_class_anomaly_ga),
-                            np.mean(same_class_anomaly_rnd),
-                            np.mean(same_class_ok_ga),
-                            np.mean(same_class_ok_rnd),
+                            np.mean(same_pred_anomaly_ga),
+                            np.mean(same_pred_anomaly_rnd),
+                            np.mean(same_pred_ok_ga),
+                            np.mean(same_pred_ok_rnd),
                             np.mean(jaccard_feature_names_ga),
                             np.mean(jaccard_feature_names_rnd),
                             np.mean(deviation_n_features_ga),
