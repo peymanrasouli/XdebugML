@@ -53,13 +53,13 @@ python neighborhood_influence.py
 ```
 python occurrence_histogram.py
 ```
-3- To explain an instance using the quasi-global explanation method run:
+3- To explain an instance using the local explanation method run:
 ```
-python quasi_global_explanation.py
+python local_explanation.py
 ```
-4- To reproduce the quasi-global explanation diversity results run:
+4- To reproduce the local explanation diversity results run:
 ```
-python quasi_global_explanation_diversity.py
+python local_explanation_diversity.py
 ```
 5- To explain an instance globally run:
 ```
