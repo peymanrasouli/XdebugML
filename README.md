@@ -53,11 +53,11 @@ python neighborhood_influence.py
 ```
 python occurrence_histogram.py
 ```
-3- To explain an instance using the local explanation method run:
+3- To explain an instance locally run:
 ```
 python local_explanation.py
 ```
-4- To reproduce the local explanation diversity results run:
+4- To reproduce the diversity results of local explanations run:
 ```
 python local_explanation_diversity.py
 ```
