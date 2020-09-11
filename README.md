@@ -53,7 +53,7 @@ python neighborhood_influence.py
 ```
 python occurrence_histogram.py
 ```
-3- To explain an instance using quasi-global explanation run:
+3- To explain an instance using quasi-global explanation method run:
 ```
 python quasi_global_explanation.py
 ```
