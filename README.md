@@ -7,17 +7,17 @@ Explainable Debugger for Black-box Machine Learning Models
 # Setup
 1- Clone the repository using HTTP/SSH:
 ```
-git clone https://github.com/peymanras/ExplainableDebugger
+git clone https://github.com/peymanras/ExDebugger
 ```
 2- Create a conda virtual environment:
 ```
-conda create -n ExplainableDebugger python=3.6
+conda create -n ExDebugger python=3.6
 ```
 3- Activate the conda environment: 
 ```
-conda activate ExplainableDebugger
+conda activate ExDebugger
 ```
-4- Standing in ExplainableDebugger directory, install the requirements:
+4- Standing in ExDebugger directory, install the requirements:
 ```
 pip install -r requirements.txt
 ```
