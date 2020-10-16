@@ -1,6 +1,6 @@
 # ExDebugger
 
-This repository contains implementation codes of the following paper:
+This repository contains the implementation source code of the following paper:
 
 Explainable Debugger for Black-box Machine Learning Models
 
