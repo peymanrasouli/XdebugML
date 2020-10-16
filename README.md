@@ -1,4 +1,4 @@
-# ExplainableDebugger
+# ExDebugger
 
 This repository contains implementation codes of the following paper:
 
