@@ -1,23 +1,23 @@
-# ExDebugger
+# EXDBUG
 
 This repository contains the implementation source code of the following paper:
 
-Explainable Debugger for Black-box Machine Learning Models
+EXDBUG: Explainable Debugger for Black-box Machine Learning Models
 
 # Setup
 1- Clone the repository using HTTP/SSH:
 ```
-git clone https://github.com/peymanras/ExDebugger
+git clone https://github.com/peymanras/EXDBUG
 ```
 2- Create a conda virtual environment:
 ```
-conda create -n ExDebugger python=3.6
+conda create -n EXDBUG python=3.6
 ```
 3- Activate the conda environment: 
 ```
-conda activate ExDebugger
+conda activate EXDBUG
 ```
-4- Standing in ExDebugger directory, install the requirements:
+4- Standing in EXDBUG directory, install the requirements:
 ```
 pip install -r requirements.txt
 ```
