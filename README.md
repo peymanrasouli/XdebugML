@@ -1,23 +1,23 @@
-# EXDBUG
+# MLDebugger
 
 This repository contains the implementation source code of the following paper:
 
-EXDBUG: Explainable Debugger for Black-box Machine Learning Models
+Explainable Debugger for Black-box Machine Learning Models
 
 # Setup
 1- Clone the repository using HTTP/SSH:
 ```
-git clone https://github.com/peymanras/EXDBUG
+git clone https://github.com/peymanras/MLDebugger
 ```
 2- Create a conda virtual environment:
 ```
-conda create -n EXDBUG python=3.6
+conda create -n MLDebugger python=3.6
 ```
 3- Activate the conda environment: 
 ```
-conda activate EXDBUG
+conda activate MLDebugger
 ```
-4- Standing in EXDBUG directory, install the requirements:
+4- Standing in MLDebugger directory, install the requirements:
 ```
 pip install -r requirements.txt
 ```
