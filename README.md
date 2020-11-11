@@ -1,4 +1,4 @@
-# MLDebugger
+# ExplainableDebugger4ML
 
 This repository contains the implementation source code of the following paper:
 
@@ -7,17 +7,17 @@ Explainable Debugger for Black-box Machine Learning Models
 # Setup
 1- Clone the repository using HTTP/SSH:
 ```
-git clone https://github.com/peymanras/MLDebugger
+git clone https://github.com/peymanras/ExplainableDebugger4ML
 ```
 2- Create a conda virtual environment:
 ```
-conda create -n MLDebugger python=3.6
+conda create -n ExplainableDebugger4ML python=3.6
 ```
 3- Activate the conda environment: 
 ```
-conda activate MLDebugger
+conda activate ExplainableDebugger4ML
 ```
-4- Standing in MLDebugger directory, install the requirements:
+4- Standing in ExplainableDebugger4ML directory, install the requirements:
 ```
 pip install -r requirements.txt
 ```
