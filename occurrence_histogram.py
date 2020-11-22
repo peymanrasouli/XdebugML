@@ -65,7 +65,7 @@ def main():
 
             # Extracting instance-level feature contributions
             # method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
-            contributions, extractor = ContributionExtraction(blackbox, X_train, method='shapley_sampling_values')
+            contributions, extractor = ContributionExtraction(blackbox, X_train, method='tree_explainer')
 
             # Finding anomaly instances in the train set
             anomaly_indices = np.where(pred_train != y_train)[0]

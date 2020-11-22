@@ -34,7 +34,7 @@ blackbox.fit(X,y)
 
 # Extracting instance-level feature contributions
 # method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
-contributions, extractor = ContributionExtraction(blackbox, X, method='shapley_sampling_values')
+contributions, extractor = ContributionExtraction(blackbox, X, method='tree_explainer')
 
 # Dimensionality reduction
 X2D = method(n_components=2).fit_transform(X)
