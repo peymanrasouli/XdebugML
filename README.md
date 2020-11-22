@@ -1,4 +1,4 @@
-# xDebugger4ML
+# xDebugger
 
 This repository contains the implementation source code of the following paper:
 
@@ -7,17 +7,17 @@ Explainable Debugger for Black-box Machine Learning Models
 # Setup
 1- Clone the repository using HTTP/SSH:
 ```
-git clone https://github.com/peymanras/xDebugger4ML
+git clone https://github.com/peymanras/xDebugger
 ```
 2- Create a conda virtual environment:
 ```
-conda create -n xDebugger4ML python=3.6
+conda create -n xDebugger python=3.6
 ```
 3- Activate the conda environment: 
 ```
-conda activate xDebugger4ML
+conda activate xDebugger
 ```
-4- Standing in xDebugger4ML directory, install the requirements:
+4- Standing in xDebugger directory, install the requirements:
 ```
 pip install -r requirements.txt
 ```
