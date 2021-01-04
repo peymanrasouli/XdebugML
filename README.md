@@ -7,7 +7,7 @@ Explainable Debugger for Black-box Machine Learning Models
 # Setup
 1- Clone the repository using HTTP/SSH:
 ```
-git clone https://github.com/peymanras/XDebugger4ML
+git clone https://github.com/peymanrasouli/XDebugger4ML
 ```
 2- Create a conda virtual environment:
 ```
