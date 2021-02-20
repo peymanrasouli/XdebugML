@@ -7,6 +7,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import NearestNeighbors
 from contribution_extraction import ContributionExtraction
 from alepython import ale_plot
+import matplotlib
+matplotlib.use('TkAgg')
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -63,8 +65,8 @@ def main():
             print('blackbox accuracy=', bb_accuracy)
 
             # Extracting instance-level feature contributions
-            # method = 'shapley_sampling_values' | 'tree_interpreter'
-            contributions, extractor = ContributionExtraction(blackbox, X_train, method='tree_explainer')
+            # method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
+            contributions, extractor = ContributionExtraction(blackbox, X_train, method='shapley_sampling_values')
 
             # Finding anomaly instances in the train set
             anomaly_indices = np.where(pred_train != y_train)[0]
