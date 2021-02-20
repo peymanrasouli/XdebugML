@@ -19,6 +19,7 @@ def InfluenceCalculation(blackbox, extractor, cKNN, fKNN, pKNN, BlackBoxConstruc
         ## Achieve neighborhood samples using cKNN method
         contribution_x = extractor(X_anomaly[i])
         _, nbrs_cKNN = cKNN.kneighbors(contribution_x.reshape(1, -1))
+        nbrs_cKNN = nbrs_cKNN[0]
 
         ## Perturb the label of the data inside the neighborhood
         y_train_ = y_train.copy()
