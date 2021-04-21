@@ -70,8 +70,8 @@ def main():
                                       (dataset_kw, blackbox_name, 'K_' + str(K_list[dataset_kw])), 'a')
 
             # Extracting instance-level feature contributions
-            # method = 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
-            contributions, extractor = ContributionExtraction(blackbox, X_train, method='shapley_sampling_values')
+            explanation_method = 'shapley_sampling_values'  # 'shapley_sampling_values' | 'tree_explainer' | 'tree_interpreter'
+            contributions, extractor = ContributionExtraction(blackbox, X_train, method=explanation_method)
 
             # Finding anomaly instances in the train set
             anomaly_indices = np.where(pred_train != y_train)[0]
