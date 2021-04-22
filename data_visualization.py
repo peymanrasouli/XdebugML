@@ -47,8 +47,8 @@ X2D_1 = X2D[np.where(y==1)]
 class_0 = plt.scatter(X2D_0[:, 0], X2D_0[:, 1], s=3, c='#2e89ba', marker='o')
 class_1 = plt.scatter(X2D_1[:, 0], X2D_1[:, 1], s=3, c='#f60c86', marker='o')
 plt.title("Feature Values", fontsize=11)
-plt.xlabel('x1')
-plt.ylabel('x2')
+plt.xlabel('$x_1$')
+plt.ylabel('$x_2$')
 plt.xticks([])
 plt.yticks([])
 plt.legend((class_0, class_1),
@@ -65,8 +65,8 @@ C2D_1 = C2D[np.where(y==1)]
 class_0 = plt.scatter(C2D_0[:, 0], C2D_0[:, 1], s=3, c='#2e89ba', marker='o')
 class_1 = plt.scatter(C2D_1[:, 0], C2D_1[:, 1], s=3, c='#f60c86', marker='o')
 plt.title("Feature Contributions", fontsize=11)
-plt.xlabel('x1')
-plt.ylabel('x2')
+plt.xlabel('$x_1$')
+plt.ylabel('$x_2$')
 plt.xticks([])
 plt.yticks([])
 plt.legend((class_0, class_1),
