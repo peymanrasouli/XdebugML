@@ -6,14 +6,14 @@ This repository contains the implementation source code of the following paper:
 
 Bibtex:
 
-  @inproceedings{rasouli2021explainable,
-                 title={Explainable Debugger for Black-box Machine Learning Models},
-                 author={Rasouli, Peyman and Yu, Ingrid Chieh},
-                 booktitle={2021 International Joint Conference on Neural Networks (IJCNN)},
-                 pages={1--10},
-                 year={2021},
-                 organization={IEEE}
-  }
+    @inproceedings{rasouli2021explainable,
+                   title={Explainable Debugger for Black-box Machine Learning Models},
+                   author={Rasouli, Peyman and Yu, Ingrid Chieh},
+                   booktitle={2021 International Joint Conference on Neural Networks (IJCNN)},
+                   pages={1--10},
+                   year={2021},
+                   organization={IEEE}
+    }
 
 # Setup
 1- Clone the repository using HTTP/SSH:
