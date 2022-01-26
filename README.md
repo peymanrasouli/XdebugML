@@ -4,7 +4,7 @@ This repository contains the implementation source code of the following paper:
 
 [Explainable Debugger for Black-box Machine Learning Models](https://ieeexplore.ieee.org/document/9533944)
 
-Bibtex:
+BibTeX:
 
     @inproceedings{rasouli2021explainable,
                    title={Explainable Debugger for Black-box Machine Learning Models},
